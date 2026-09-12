@@ -1,10 +1,12 @@
 (() => {
   const ensureVisualStyles = () => {
-    if (document.querySelector('link[href$="visuals.css"]')) return;
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = './visuals.css';
-    document.head.appendChild(link);
+    ['./visuals.css','./fixes.css'].forEach(href => {
+      if (document.querySelector(`link[href$="${href.split('/').pop()}"]`)) return;
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = href;
+      document.head.appendChild(link);
+    });
   };
   ensureVisualStyles();
 
