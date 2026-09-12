@@ -1,17 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 520" role="img" aria-labelledby="t d">
-<title id="t">Quantic Minds</title><desc id="d">Logo Quantic Minds blanc métallisé et bleu</desc>
-<defs>
-  <linearGradient id="silver" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#f7f8fb"/><stop offset=".7" stop-color="#b9c1cb"/><stop offset="1" stop-color="#fff"/></linearGradient>
-  <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00d5ff"/><stop offset=".42" stop-color="#078cff"/><stop offset="1" stop-color="#1438ff"/></linearGradient>
-  <filter id="glow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-</defs>
-<g transform="translate(370 22) scale(1.15)" stroke-linejoin="round" stroke-linecap="square" fill="none">
- <path d="M135 18 35 78v144l100 58 0-48-58-34V103l80-48 43 25 34-20-99-42Z" stroke="url(#silver)" stroke-width="26"/>
- <path d="M136 84 87 113v88l49 29 0-39-17-10v-49l42-25 24 14 25-16-74-21Z" stroke="url(#silver)" stroke-width="22"/>
- <path d="M189 82 240 53l52 30v58l-48 28v52l-55 32-34-20 48-28v-59l44-25v-29l-26-15-27 16-5-11Z" stroke="url(#blue)" stroke-width="27" filter="url(#glow)"/>
-</g>
-<g font-family="Arial,Helvetica,sans-serif" font-weight="800" letter-spacing="6">
- <text x="85" y="455" font-size="94" fill="url(#silver)">QUANTIC</text>
- <text x="650" y="455" font-size="94" fill="url(#blue)" filter="url(#glow)">MINDS</text>
-</g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 190" role="img" aria-label="Quantic Minds"><defs><linearGradient id="silver" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#eef1f5"/><stop offset=".72" stop-color="#aeb8c4"/><stop offset="1" stop-color="#fff"/></linearGradient><linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#12d8ff"/><stop offset=".48" stop-color="#078cff"/><stop offset="1" stop-color="#143cff"/></linearGradient><filter id="g"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g transform="translate(8 8)" fill="none" stroke-linejoin="miter"><path d="M82 5 18 42v92l64 37v-31l-37-21V58l53-31" stroke="url(#silver)" stroke-width="20"/><path d="M83 48 50 67v50l33 19v-27l-10-6V81l28-16" stroke="url(#silver)" stroke-width="17"/><path d="M126 38 166 61v46l-39 23v31l-44 26v-35l22-13v-31l-17-10V61l38-23Zm0 23-18 11v24l18 10 18-10V72l-18-11Z" fill="url(#blue)" stroke="url(#blue)" stroke-width="3" filter="url(#g)"/></g><text x="208" y="116" font-family="Arial,Helvetica,sans-serif" font-size="63" font-weight="900" letter-spacing="8" fill="url(#silver)">QUANTIC</text><text x="532" y="116" font-family="Arial,Helvetica,sans-serif" font-size="63" font-weight="900" letter-spacing="5" fill="url(#blue)" filter="url(#g)">MINDS</text></svg>
