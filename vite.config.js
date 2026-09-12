@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-
+import { resolve } from 'path'
 export default defineConfig({
-  plugins: [react()],
-  base: './',
-  server: { host: true },
+  base:'./',
+  build:{rollupOptions:{input:{
+    home:resolve(process.cwd(),'index.html'),lab:resolve(process.cwd(),'lab.html'),projects:resolve(process.cwd(),'projects.html'),research:resolve(process.cwd(),'research.html'),team:resolve(process.cwd(),'team.html'),press:resolve(process.cwd(),'press.html'),careers:resolve(process.cwd(),'careers.html'),contact:resolve(process.cwd(),'contact.html')
+  }}}
 })
