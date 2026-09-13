@@ -1,0 +1,1 @@
+Official Quantic Minds logo assets are the PNG files supplied by the owner. The website must use quantic-minds-logo.png and quantic-minds-mark.png directly; do not redraw or approximate them.
