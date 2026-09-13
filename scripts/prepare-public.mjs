@@ -12,7 +12,7 @@ for(const name of ['script.js','quantic-news-config.js','quantic-news-social.js'
 
 const publicAssets=join(publicDir,'assets');
 await mkdir(publicAssets,{recursive:true});
-await copyFile(join(root,'assets','quantic-minds-logo.webp'),join(publicAssets,'quantic-minds-logo.webp'));
+await copyFile(join(root,'assets','quantic-minds-logo.png'),join(publicAssets,'quantic-minds-logo.png'));
 await copyFile(join(root,'assets','quantic-minds-mark.webp'),join(publicAssets,'quantic-minds-mark.webp'));
 await copyFile(join(root,'assets','quantic-news-logo.svg'),join(publicAssets,'quantic-news-logo.svg'));
 
