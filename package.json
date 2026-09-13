@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/generate-news-articles.mjs && vite build",
+    "build": "node scripts/generate-news-articles.mjs && node scripts/prepare-public.mjs && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
