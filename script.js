@@ -1,8 +1,8 @@
 (() => {
   const ensureStyles = () => {
-    ['./visuals.css','./public/fixes.css','./atlas.css','./hero.css','./brand-v2.css','./images-v2.css'].forEach(href => {
+    ['./visuals.css','./public/fixes.css','./atlas.css','./hero.css','./brand-v2.css','./images-v2.css','./brand-official.css'].forEach(href => {
       const name = href.split('/').pop();
-      if (document.querySelector(`link[href$="${name}"]`)) return;
+      if (document.querySelector(`link[href$="${name}"],link[href*="${name}?"]`)) return;
       const link = document.createElement('link');
       link.rel = 'stylesheet';
       link.href = href;
@@ -10,6 +10,20 @@
     });
   };
   ensureStyles();
+
+  document.querySelectorAll('.brand').forEach(brand=>{
+    if(brand.querySelector('.brand-logo')) return;
+    brand.innerHTML='<img class="brand-logo" src="./assets/quantic-minds-logo.svg" alt="Quantic Minds — Intelligence · Innovation · Impact">';
+  });
+
+  document.querySelectorAll('a[href^="projects.html"]').forEach(a=>{
+    const href=a.getAttribute('href')||'projects.html';
+    a.setAttribute('href',href.replace(/^projects\.html/,'solutions.html'));
+  });
+  document.querySelectorAll('.nav a,.mobile-nav a,.footer-links a').forEach(a=>{
+    const href=(a.getAttribute('href')||'').split('#')[0];
+    if(href==='solutions.html') a.textContent='Solutions';
+  });
 
   const file = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
   const addNewsLink = (nav, mobile = false) => {
@@ -32,7 +46,7 @@
   const toggle=document.querySelector('.mobile-toggle');
   const mobile=document.querySelector('.mobile-nav');
   if(toggle&&mobile){toggle.addEventListener('click',()=>mobile.classList.toggle('open'));mobile.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>mobile.classList.remove('open')))}
-  document.querySelectorAll('[data-nav]').forEach(a=>{const h=(a.getAttribute('href')||'').split('#')[0].toLowerCase();if(h===file||(file===''&&h==='index.html'))a.classList.add('active')});
+  document.querySelectorAll('[data-nav]').forEach(a=>{const h=(a.getAttribute('href')||'').split('#')[0].toLowerCase();if(h===file||(file==='projects.html'&&h==='solutions.html')||(file===''&&h==='index.html'))a.classList.add('active')});
 
   const subjectParam=new URLSearchParams(location.search).get('subject');
   const subjectField=document.querySelector('[name="subject"]');
