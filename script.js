@@ -1,7 +1,7 @@
 (() => {
   const ensureStyles = () => {
-    ['./visuals.css','./public/fixes.css','./atlas.css','./hero.css','./brand-v2.css','./images-v2.css','./brand-official.css'].forEach(href => {
-      const name = href.split('/').pop();
+    ['./visuals.css','./public/fixes.css','./atlas.css','./hero.css','./brand-v2.css','./images-v2.css','./brand-official.css?v=6'].forEach(href => {
+      const name = href.split('/').pop().split('?')[0];
       if (document.querySelector(`link[href$="${name}"],link[href*="${name}?"]`)) return;
       const link = document.createElement('link'); link.rel = 'stylesheet'; link.href = href; document.head.appendChild(link);
     });
@@ -9,15 +9,17 @@
   ensureStyles();
 
   const scriptEl=[...document.scripts].find(s=>/\/script\.js(?:\?|$)/.test(s.src));
-  const logoUrl=scriptEl?new URL('assets/quantic-minds-logo.svg?v=official-20260913',scriptEl.src).href:'./assets/quantic-minds-logo.svg?v=official-20260913';
+  const logoUrl=scriptEl?new URL('assets/quantic-minds-logo.svg?v=official-6',scriptEl.src).href:'./assets/quantic-minds-logo.svg?v=official-6';
   document.querySelectorAll('.brand').forEach(brand=>{
-    const existing=brand.querySelector('.brand-logo');
-    if(existing){existing.src=logoUrl;brand.classList.add('brand-has-official');return;}
-    const img=document.createElement('img');
-    img.className='brand-logo';
-    img.alt='Quantic Minds — Intelligence · Innovation · Impact';
-    img.addEventListener('load',()=>{brand.prepend(img);brand.classList.add('brand-has-official')},{once:true});
+    let img=brand.querySelector('.brand-logo');
+    if(!img){
+      img=document.createElement('img');
+      img.className='brand-logo';
+      img.alt='Quantic Minds — Intelligence · Innovation · Impact';
+      brand.prepend(img);
+    }
     img.src=logoUrl;
+    brand.classList.add('brand-has-official');
   });
 
   document.querySelectorAll('a[href^="projects.html"]').forEach(a=>{const href=a.getAttribute('href')||'projects.html';a.setAttribute('href',href.replace(/^projects\.html/,'solutions.html'))});
