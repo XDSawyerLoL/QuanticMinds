@@ -1,6 +1,6 @@
 (() => {
   const ensureStyles = () => {
-    ['./visuals.css','./public/fixes.css','./atlas.css','./hero.css','./brand-v2.css','./images-v2.css','./brand-official.css?v=7'].forEach(href => {
+    ['./visuals.css','./public/fixes.css','./atlas.css','./hero.css','./brand-v2.css','./images-v2.css','./brand-official.css?v=8'].forEach(href => {
       const name = href.split('/').pop().split('?')[0];
       if (document.querySelector(`link[href$="${name}"],link[href*="${name}?"]`)) return;
       const link = document.createElement('link'); link.rel = 'stylesheet'; link.href = href; document.head.appendChild(link);
@@ -10,12 +10,12 @@
 
   const scriptEl=[...document.scripts].find(s=>/\/script\.js(?:\?|$)/.test(s.src));
   const baseUrl=scriptEl?new URL('.',scriptEl.src):new URL('./',location.href);
-  const logoUrl=new URL('assets/quantic-minds-logo.svg?v=official-7',baseUrl).href;
-  const markUrl=new URL('assets/quantic-minds-mark.svg?v=official-1',baseUrl).href;
+  const logoUrl=new URL('assets/quantic-minds-logo.webp?v=official-8',baseUrl).href;
+  const markUrl=new URL('assets/quantic-minds-mark.webp?v=official-8',baseUrl).href;
 
   let favicon=document.querySelector('link[rel="icon"]');
   if(!favicon){favicon=document.createElement('link');favicon.rel='icon';document.head.appendChild(favicon)}
-  favicon.type='image/svg+xml';favicon.href=markUrl;
+  favicon.type='image/webp';favicon.href=markUrl;
 
   document.querySelectorAll('.brand').forEach(brand=>{
     brand.innerHTML='';
