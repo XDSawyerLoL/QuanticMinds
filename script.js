@@ -9,10 +9,10 @@
   ensureStyles();
 
   const scriptEl=[...document.scripts].find(s=>/\/script\.js(?:\?|$)/.test(s.src));
-  const logoUrl=scriptEl?new URL('assets/quantic-minds-logo.svg',scriptEl.src).href:'./assets/quantic-minds-logo.svg';
+  const logoUrl=scriptEl?new URL('assets/quantic-minds-logo.svg?v=official-20260913',scriptEl.src).href:'./assets/quantic-minds-logo.svg?v=official-20260913';
   document.querySelectorAll('.brand').forEach(brand=>{
     const existing=brand.querySelector('.brand-logo');
-    if(existing){brand.classList.add('brand-has-official');return;}
+    if(existing){existing.src=logoUrl;brand.classList.add('brand-has-official');return;}
     const img=document.createElement('img');
     img.className='brand-logo';
     img.alt='Quantic Minds — Intelligence · Innovation · Impact';
