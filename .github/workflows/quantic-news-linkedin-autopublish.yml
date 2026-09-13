@@ -1,0 +1,27 @@
+name: Quantic News LinkedIn autopublish
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger secure Quantic News publisher
+        env:
+          BACKEND_URL: ${{ secrets.QUANTIC_NEWS_BACKEND_URL }}
+          CRON_SECRET: ${{ secrets.QUANTIC_NEWS_CRON_SECRET }}
+        run: |
+          if [ -z "$BACKEND_URL" ] || [ -z "$CRON_SECRET" ]; then
+            echo "Quantic News LinkedIn autopublish is waiting for backend configuration."
+            exit 0
+          fi
+          curl --fail-with-body --silent --show-error \
+            -X POST "${BACKEND_URL%/}/jobs/publish" \
+            -H "x-cron-secret: $CRON_SECRET" \
+            -H "accept: application/json"
