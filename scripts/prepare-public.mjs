@@ -6,8 +6,13 @@ const root=dirname(dirname(fileURLToPath(import.meta.url)));
 const publicDir=join(root,'public');
 await mkdir(publicDir,{recursive:true});
 
-for(const name of ['script.js','quantic-news-config.js','quantic-news-social.js','news.js','quantic-news-article-links.js']){
+for(const name of ['script.js','quantic-news-config.js','quantic-news-social.js','news.js','quantic-news-article-links.js','brand-official.css']){
   await copyFile(join(root,name),join(publicDir,name));
 }
 
-console.log('Copied static JavaScript for GitHub Pages.');
+const publicAssets=join(publicDir,'assets');
+await mkdir(publicAssets,{recursive:true});
+await copyFile(join(root,'assets','quantic-minds-logo.svg'),join(publicAssets,'quantic-minds-logo.svg'));
+await copyFile(join(root,'assets','quantic-news-logo.svg'),join(publicAssets,'quantic-news-logo.svg'));
+
+console.log('Copied static JavaScript, branding CSS and logo assets for GitHub Pages.');
