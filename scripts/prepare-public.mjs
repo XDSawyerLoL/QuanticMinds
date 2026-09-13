@@ -13,6 +13,7 @@ for(const name of ['script.js','quantic-news-config.js','quantic-news-social.js'
 const publicAssets=join(publicDir,'assets');
 await mkdir(publicAssets,{recursive:true});
 await copyFile(join(root,'assets','quantic-minds-logo.svg'),join(publicAssets,'quantic-minds-logo.svg'));
+await copyFile(join(root,'assets','quantic-minds-mark.svg'),join(publicAssets,'quantic-minds-mark.svg'));
 await copyFile(join(root,'assets','quantic-news-logo.svg'),join(publicAssets,'quantic-news-logo.svg'));
 
-console.log('Copied static JavaScript, branding CSS and logo assets for GitHub Pages.');
+console.log('Copied static JavaScript, branding CSS and official logo assets for GitHub Pages.');
