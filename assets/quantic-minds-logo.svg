@@ -1,1 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 190" role="img" aria-label="Quantic Minds"><defs><linearGradient id="silver" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#eef1f5"/><stop offset=".72" stop-color="#aeb8c4"/><stop offset="1" stop-color="#fff"/></linearGradient><linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#12d8ff"/><stop offset=".48" stop-color="#078cff"/><stop offset="1" stop-color="#143cff"/></linearGradient><filter id="g"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g transform="translate(8 8)" fill="none" stroke-linejoin="miter"><path d="M82 5 18 42v92l64 37v-31l-37-21V58l53-31" stroke="url(#silver)" stroke-width="20"/><path d="M83 48 50 67v50l33 19v-27l-10-6V81l28-16" stroke="url(#silver)" stroke-width="17"/><path d="M126 38 166 61v46l-39 23v31l-44 26v-35l22-13v-31l-17-10V61l38-23Zm0 23-18 11v24l18 10 18-10V72l-18-11Z" fill="url(#blue)" stroke="url(#blue)" stroke-width="3" filter="url(#g)"/></g><text x="208" y="116" font-family="Arial,Helvetica,sans-serif" font-size="63" font-weight="900" letter-spacing="8" fill="url(#silver)">QUANTIC</text><text x="532" y="116" font-family="Arial,Helvetica,sans-serif" font-size="63" font-weight="900" letter-spacing="5" fill="url(#blue)" filter="url(#g)">MINDS</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 930 210" role="img" aria-labelledby="title desc">
+  <title id="title">Quantic Minds</title>
+  <desc id="desc">Intelligence · Innovation · Impact</desc>
+  <defs>
+    <linearGradient id="qg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#42e7ff"/>
+      <stop offset=".24" stop-color="#83d8ff"/>
+      <stop offset=".52" stop-color="#2e8cff"/>
+      <stop offset=".78" stop-color="#6675ff"/>
+      <stop offset="1" stop-color="#9a69ff"/>
+    </linearGradient>
+    <linearGradient id="mg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#57aaff"/>
+      <stop offset="1" stop-color="#8f6dff"/>
+    </linearGradient>
+    <filter id="soft" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <g transform="translate(14 10)">
+    <circle cx="88" cy="82" r="57" fill="none" stroke="url(#qg)" stroke-width="23" stroke-linecap="round" filter="url(#soft)"/>
+    <path d="M104 112 L154 155" fill="none" stroke="url(#qg)" stroke-width="23" stroke-linecap="round" filter="url(#soft)"/>
+    <path d="M43 50 C58 31 80 21 103 24" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="5" stroke-linecap="round"/>
+  </g>
+  <text x="180" y="106" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="77" font-weight="300" letter-spacing="-2" fill="#f7f9fd">Quantic</text>
+  <text x="474" y="106" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="77" font-weight="300" letter-spacing="-2" fill="url(#mg)">Minds</text>
+  <text x="184" y="155" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="24" font-weight="300" letter-spacing="9" fill="#b7c0cc">Intelligence · Innovation · Impact</text>
+</svg>
