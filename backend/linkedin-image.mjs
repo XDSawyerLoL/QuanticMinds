@@ -11,11 +11,41 @@ function isPublicHttps(raw){
   }catch{return false}
 }
 
-export async function uploadArticleThumbnail({token,ownerUrn,imageUrl,linkedinVersion}){
-  if(!token||!ownerUrn||!isPublicHttps(imageUrl))return '';
+async function safeFetch(raw,options={},maxRedirects=3){
+  let url=raw;
+  for(let n=0;n<=maxRedirects;n++){
+    if(!isPublicHttps(url))return null;
+    const r=await fetch(url,{...options,redirect:'manual'});
+    if(r.status>=300&&r.status<400&&r.headers.get('location')){
+      url=new URL(r.headers.get('location'),url).href;
+      continue;
+    }
+    return r;
+  }
+  return null;
+}
+
+async function discoverImage(imageUrl,sourceUrl){
+  if(isPublicHttps(imageUrl))return imageUrl;
+  if(!isPublicHttps(sourceUrl))return '';
   try{
-    const source=await fetch(imageUrl,{headers:{'user-agent':'Mozilla/5.0 QuanticNewsBot/1.0'}});
-    if(!source.ok)return '';
+    const page=await safeFetch(sourceUrl,{headers:{'user-agent':'Mozilla/5.0 QuanticNewsBot/1.0','accept':'text/html'}});
+    if(!page?.ok)return '';
+    const html=(await page.text()).slice(0,800000);
+    const match=html.match(/<meta[^>]+(?:property|name)=["'](?:og:image|twitter:image)["'][^>]+content=["']([^"']+)["']/i)||html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+(?:property|name)=["'](?:og:image|twitter:image)["']/i);
+    if(!match?.[1])return '';
+    const found=new URL(match[1],sourceUrl).href;
+    return isPublicHttps(found)?found:'';
+  }catch{return ''}
+}
+
+export async function uploadArticleThumbnail({token,ownerUrn,imageUrl,sourceUrl,linkedinVersion}){
+  if(!token||!ownerUrn)return '';
+  const resolved=await discoverImage(imageUrl,sourceUrl);
+  if(!resolved)return '';
+  try{
+    const source=await safeFetch(resolved,{headers:{'user-agent':'Mozilla/5.0 QuanticNewsBot/1.0','accept':'image/*'}});
+    if(!source?.ok)return '';
     const type=(source.headers.get('content-type')||'').split(';')[0].toLowerCase();
     if(!allowedImageType.has(type))return '';
     const bytes=Buffer.from(await source.arrayBuffer());
