@@ -1,0 +1,24 @@
+/* Quantic News — LinkedIn sharing + subscription */
+body.qn-modal-open{overflow:hidden}
+.news-toolbar-actions{display:flex;align-items:center;gap:12px;margin-left:auto}
+.news-subscribe-btn{border:1px solid #0a66c2;background:#0a66c2;color:#fff;border-radius:999px;padding:9px 15px;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:.2s}
+.news-subscribe-btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.news-subscribe-btn.active{background:#12743f;border-color:#2fd17b}
+.news-share-linkedin{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid rgba(10,102,194,.55);background:#0a66c2;color:#fff;border-radius:999px;padding:8px 11px;font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;text-decoration:none;white-space:nowrap}
+.news-share-linkedin:hover{filter:brightness(1.08);text-decoration:none}
+.news-card-actions{gap:9px;flex-wrap:wrap}
+.news-card-actions .news-source-link{margin-left:auto}
+.qn-modal{position:fixed;inset:0;z-index:1500;background:rgba(0,5,11,.78);backdrop-filter:blur(12px);display:grid;place-items:center;padding:20px}
+.qn-modal[hidden]{display:none}
+.qn-dialog{width:min(760px,100%);max-height:92vh;overflow:auto;background:#07111b;border:1px solid rgba(255,255,255,.18);box-shadow:0 35px 120px rgba(0,0,0,.58)}
+.qn-dialog-head{display:flex;justify-content:space-between;gap:22px;padding:25px 26px 19px;border-bottom:1px solid rgba(255,255,255,.12)}
+.qn-dialog-head h2{font-size:35px;letter-spacing:-.035em;margin:0 0 8px}.qn-dialog-head p{margin:0;color:#a8b6c5;font-size:13px;line-height:1.55;max-width:570px}
+.qn-close{border:0;background:transparent;color:#fff;font-size:29px;cursor:pointer;line-height:1;padding:2px 8px}
+.qn-dialog-body{padding:23px 26px 27px}.qn-step{padding-bottom:22px;margin-bottom:22px;border-bottom:1px solid rgba(255,255,255,.11)}.qn-step:last-of-type{border-bottom:0;margin-bottom:0}
+.qn-step-title{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#77c8ff;margin-bottom:12px;font-weight:800}
+.qn-mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.qn-mode{border:1px solid rgba(255,255,255,.17);background:#0b1928;padding:15px;cursor:pointer}.qn-mode input{margin-right:7px}.qn-mode strong{font-size:13px}.qn-mode small{display:block;color:#8fa0b1;line-height:1.45;margin:7px 0 0 22px}
+.qn-settings{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.qn-field label{display:block;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:#9aaabc;margin-bottom:6px}.qn-field select,.qn-field input{width:100%;border:1px solid rgba(255,255,255,.16);background:#02070d;color:#fff;padding:11px 12px;outline:none}
+.qn-linkedin-box{display:flex;align-items:center;justify-content:space-between;gap:18px;background:rgba(10,102,194,.10);border-left:3px solid #0a66c2;padding:16px}.qn-linkedin-box strong{display:block;font-size:14px}.qn-linkedin-box p{margin:4px 0 0;color:#91a2b4;font-size:11px;line-height:1.45}.qn-connect{border:0;background:#0a66c2;color:#fff;border-radius:999px;padding:11px 16px;font-size:10px;font-weight:800;cursor:pointer;white-space:nowrap}
+.qn-launch-row{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:22px}.qn-save-state{font-size:11px;color:#91a2b4}.qn-launch{border:0;background:#fff;color:#06101a;border-radius:999px;padding:12px 19px;font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}.qn-fineprint{color:#657789;font-size:10px;line-height:1.5;margin:13px 0 0}.qn-toast{position:fixed;right:22px;bottom:22px;z-index:1600;max-width:390px;background:#f5f7fa;color:#06101a;padding:13px 16px;border-radius:10px;box-shadow:0 18px 55px rgba(0,0,0,.4);font-size:12px;font-weight:700}.qn-toast[hidden]{display:none}
+@media(max-width:1100px){.news-toolbar-inner{align-items:flex-start}.news-toolbar-actions{width:100%;justify-content:space-between;margin-left:0}.news-updated{flex:1}}
+@media(max-width:760px){.news-toolbar-actions{align-items:center}.news-subscribe-btn{padding:9px 12px}.news-card-actions{display:flex!important;align-items:center!important}.news-card-actions .news-source-link{margin-left:0}.qn-dialog-head,.qn-dialog-body{padding-left:18px;padding-right:18px}.qn-mode-grid,.qn-settings{grid-template-columns:1fr}.qn-linkedin-box,.qn-launch-row{display:block}.qn-connect,.qn-launch{width:100%;margin-top:13px}.qn-toast{left:14px;right:14px;bottom:14px}.news-share-linkedin{padding:8px 10px}}
