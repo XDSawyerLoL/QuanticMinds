@@ -1,26 +1,42 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 930 210" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 205" role="img" aria-labelledby="title desc">
   <title id="title">Quantic Minds</title>
   <desc id="desc">Intelligence · Innovation · Impact</desc>
   <defs>
-    <linearGradient id="qg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#42e7ff"/>
-      <stop offset=".24" stop-color="#83d8ff"/>
-      <stop offset=".52" stop-color="#2e8cff"/>
-      <stop offset=".78" stop-color="#6675ff"/>
-      <stop offset="1" stop-color="#9a69ff"/>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8df4ff"/>
+      <stop offset=".16" stop-color="#40cfff"/>
+      <stop offset=".34" stop-color="#9ec5ff"/>
+      <stop offset=".50" stop-color="#f2f6ff"/>
+      <stop offset=".68" stop-color="#5a8dff"/>
+      <stop offset=".84" stop-color="#746fff"/>
+      <stop offset="1" stop-color="#9c72ff"/>
     </linearGradient>
-    <linearGradient id="mg" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#57aaff"/>
-      <stop offset="1" stop-color="#8f6dff"/>
+    <linearGradient id="tail" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#44d9ff"/>
+      <stop offset=".50" stop-color="#4e9cff"/>
+      <stop offset="1" stop-color="#8b67ff"/>
     </linearGradient>
-    <filter id="soft" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <linearGradient id="minds" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#61b3ff"/>
+      <stop offset=".55" stop-color="#708dff"/>
+      <stop offset="1" stop-color="#9b73ff"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".95"/>
+      <stop offset=".45" stop-color="#d8f5ff" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
   </defs>
-  <g transform="translate(14 10)">
-    <circle cx="88" cy="82" r="57" fill="none" stroke="url(#qg)" stroke-width="23" stroke-linecap="round" filter="url(#soft)"/>
-    <path d="M104 112 L154 155" fill="none" stroke="url(#qg)" stroke-width="23" stroke-linecap="round" filter="url(#soft)"/>
-    <path d="M43 50 C58 31 80 21 103 24" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="5" stroke-linecap="round"/>
+
+  <g transform="translate(8 2)">
+    <path d="M101 20A61 61 0 1 0 101 142A61 61 0 0 0 138 128"
+          fill="none" stroke="url(#ring)" stroke-width="24" stroke-linecap="round"/>
+    <path d="M108 116L161 157" fill="none" stroke="url(#tail)" stroke-width="24" stroke-linecap="round"/>
+    <path d="M52 47C68 29 92 20 115 24" fill="none" stroke="url(#shine)" stroke-width="6" stroke-linecap="round"/>
+    <path d="M45 105C58 130 85 143 111 141" fill="none" stroke="#72efff" stroke-opacity=".36" stroke-width="5" stroke-linecap="round"/>
   </g>
-  <text x="180" y="106" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="77" font-weight="300" letter-spacing="-2" fill="#f7f9fd">Quantic</text>
-  <text x="474" y="106" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="77" font-weight="300" letter-spacing="-2" fill="url(#mg)">Minds</text>
-  <text x="184" y="155" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="24" font-weight="300" letter-spacing="9" fill="#b7c0cc">Intelligence · Innovation · Impact</text>
+
+  <text x="170" y="105" font-family="Avenir Next,Avenir,Inter,Segoe UI,Arial,sans-serif" font-size="78" font-weight="300" letter-spacing="-2.5" fill="#f8f9fc">Quantic</text>
+  <text x="473" y="105" font-family="Avenir Next,Avenir,Inter,Segoe UI,Arial,sans-serif" font-size="78" font-weight="300" letter-spacing="-2.5" fill="url(#minds)">Minds</text>
+  <text x="173" y="155" font-family="Avenir Next,Avenir,Inter,Segoe UI,Arial,sans-serif" font-size="23" font-weight="300" letter-spacing="8.6" fill="#c2c8d2">Intelligence · Innovation · Impact</text>
 </svg>
