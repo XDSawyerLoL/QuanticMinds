@@ -1,6 +1,6 @@
 (() => {
   const ensureStyles = () => {
-    ['./visuals.css','./public/fixes.css','./atlas.css','./hero.css','./brand-v2.css'].forEach(href => {
+    ['./visuals.css','./public/fixes.css','./atlas.css','./hero.css','./brand-v2.css','./images-v2.css'].forEach(href => {
       const name = href.split('/').pop();
       if (document.querySelector(`link[href$="${name}"]`)) return;
       const link = document.createElement('link');
