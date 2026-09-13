@@ -22,10 +22,10 @@ for(const name of files){
   let html=await readFile(path,'utf8');
   html=injectIntoNav(html,'nav');
   html=injectIntoNav(html,'mobile-nav');
-  html=html.replace(/src="\.\/script\.js(?:\?v=[^"]*)?"/g,'src="./script.js?v=20260913-4"');
+  html=html.replace(/src="\.\/script\.js(?:\?v=[^"]*)?"/g,'src="./script.js?v=20260913-5"');
   if(name==='news.html'){
-    html=html.replace(/src="\.\/news\.js(?:\?v=[^"]*)?"/g,'src="./news.js?v=7"');
-    html=html.replace(/src="\.\/quantic-news-article-links\.js(?:\?v=[^"]*)?"/g,'src="./quantic-news-article-links.js?v=3"');
+    html=html.replace(/src="\.\/news\.js(?:\?v=[^"]*)?"/g,'src="./news.js?v=8"');
+    html=html.replace(/<script src="\.\/quantic-news-article-links\.js(?:\?v=[^"]*)?"><\/script>/g,'');
   }
   await writeFile(path,html,'utf8');
 }
