@@ -7,7 +7,19 @@
     });
   };
   ensureStyles();
-  document.querySelectorAll('.brand').forEach(brand=>{if(!brand.querySelector('.brand-logo'))brand.innerHTML='<img class="brand-logo" src="./assets/quantic-minds-logo.svg" alt="Quantic Minds — Intelligence · Innovation · Impact">'});
+
+  const scriptEl=[...document.scripts].find(s=>/\/script\.js(?:\?|$)/.test(s.src));
+  const logoUrl=scriptEl?new URL('assets/quantic-minds-logo.svg',scriptEl.src).href:'./assets/quantic-minds-logo.svg';
+  document.querySelectorAll('.brand').forEach(brand=>{
+    const existing=brand.querySelector('.brand-logo');
+    if(existing){brand.classList.add('brand-has-official');return;}
+    const img=document.createElement('img');
+    img.className='brand-logo';
+    img.alt='Quantic Minds — Intelligence · Innovation · Impact';
+    img.addEventListener('load',()=>{brand.prepend(img);brand.classList.add('brand-has-official')},{once:true});
+    img.src=logoUrl;
+  });
+
   document.querySelectorAll('a[href^="projects.html"]').forEach(a=>{const href=a.getAttribute('href')||'projects.html';a.setAttribute('href',href.replace(/^projects\.html/,'solutions.html'))});
   document.querySelectorAll('.nav a,.mobile-nav a,.footer-links a').forEach(a=>{const href=(a.getAttribute('href')||'').split('#')[0];if(href==='solutions.html')a.textContent='Solutions'});
   document.querySelectorAll('.future-section .eyebrow').forEach(el=>{if(/NOS PROJETS/i.test(el.textContent))el.textContent='NOS SOLUTIONS'});
