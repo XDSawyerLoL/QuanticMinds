@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 460" role="img" aria-labelledby="t d">
+<title id="t">Quantic Sillage</title><desc id="d">Logo Quantic Sillage noir or et bleu galactique</desc>
+<defs>
+  <linearGradient id="ring" x1="360" y1="45" x2="725" y2="350" gradientUnits="userSpaceOnUse"><stop stop-color="#1788ff"/><stop offset=".36" stop-color="#6ab8ff"/><stop offset=".51" stop-color="#f7f1df"/><stop offset=".72" stop-color="#efca83"/><stop offset="1" stop-color="#96652d"/></linearGradient>
+  <linearGradient id="gold" x1="340" y1="220" x2="760" y2="350" gradientUnits="userSpaceOnUse"><stop stop-color="#8e622c"/><stop offset=".22" stop-color="#fff0bd"/><stop offset=".52" stop-color="#d7a95e"/><stop offset=".76" stop-color="#fff2bf"/><stop offset="1" stop-color="#93632c"/></linearGradient>
+  <linearGradient id="type" x1="220" y1="0" x2="980" y2="0"><stop stop-color="#f8f0d9"/><stop offset=".45" stop-color="#d4a858"/><stop offset=".75" stop-color="#fff0bd"/><stop offset="1" stop-color="#b67f37"/></linearGradient>
+  <filter id="g"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<g transform="translate(340,-15) scale(.78)">
+ <circle cx="253" cy="235" r="165" fill="#030407" stroke="url(#ring)" stroke-width="8" filter="url(#g)"/>
+ <path d="M82 281 C158 291 220 304 278 334 C322 357 343 382 335 414 C323 461 258 469 177 444 C257 460 315 440 319 405 C323 366 273 342 219 325 C169 309 122 297 82 281Z" fill="url(#gold)"/>
+ <path d="M83 281 C191 302 277 322 346 345 C401 363 440 385 453 411 C432 396 398 385 352 377 C310 369 277 363 247 350 C197 328 143 303 83 281Z" fill="url(#gold)"/>
+ <circle cx="392" cy="116" r="5" fill="#fff4c9" filter="url(#g)"/>
+</g>
+<text x="600" y="374" text-anchor="middle" fill="url(#type)" font-family="Arial,Helvetica,sans-serif" font-size="58" font-weight="300" letter-spacing="17">QUANTIC SILLAGE</text>
+<text x="600" y="424" text-anchor="middle" fill="#d9dce2" font-family="Arial,Helvetica,sans-serif" font-size="14" letter-spacing="10">EXPLORER · CONSTRUIRE · AMPLIFIER</text>
+</svg>
