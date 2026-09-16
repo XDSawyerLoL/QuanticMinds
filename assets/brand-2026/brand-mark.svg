@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 520" role="img" aria-labelledby="t d">
+<title id="t">Quantic Sillage</title><desc id="d">Emblème orbital bleu galactique et or</desc>
+<defs>
+  <linearGradient id="ring" x1="70" y1="95" x2="450" y2="390" gradientUnits="userSpaceOnUse">
+    <stop offset="0" stop-color="#1788ff"/><stop offset=".36" stop-color="#6ab8ff"/><stop offset=".51" stop-color="#f7f1df"/><stop offset=".70" stop-color="#f0cf8b"/><stop offset="1" stop-color="#9a6a2e"/>
+  </linearGradient>
+  <linearGradient id="gold" x1="80" y1="285" x2="462" y2="390" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#8f632b"/><stop offset=".24" stop-color="#fff0bd"/><stop offset=".52" stop-color="#d5a457"/><stop offset=".76" stop-color="#fff2bd"/><stop offset="1" stop-color="#9b6c31"/>
+  </linearGradient>
+  <filter id="blueGlow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="10" result="b"/><feFlood flood-color="#1777ff" flood-opacity=".65"/><feComposite in2="b" operator="in"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="goldGlow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="7" result="b"/><feFlood flood-color="#f1bd62" flood-opacity=".5"/><feComposite in2="b" operator="in"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<circle cx="253" cy="235" r="165" fill="#030407" stroke="url(#ring)" stroke-width="8" filter="url(#blueGlow)"/>
+<path d="M82 281 C158 291 220 304 278 334 C322 357 343 382 335 414 C323 461 258 469 177 444 C257 460 315 440 319 405 C323 366 273 342 219 325 C169 309 122 297 82 281Z" fill="url(#gold)" filter="url(#goldGlow)"/>
+<path d="M83 281 C191 302 277 322 346 345 C401 363 440 385 453 411 C432 396 398 385 352 377 C310 369 277 363 247 350 C197 328 143 303 83 281Z" fill="url(#gold)" filter="url(#goldGlow)"/>
+<circle cx="392" cy="116" r="5" fill="#fff8db" filter="url(#goldGlow)"/>
+<path d="M365 94 L419 140 M419 94 L365 140" stroke="#f5d08b" stroke-width="1.5" opacity=".35"/>
+</svg>
