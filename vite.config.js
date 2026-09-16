@@ -9,6 +9,7 @@ export default defineConfig({
     projects:resolve(process.cwd(),'projects.html'),
     solutions:resolve(process.cwd(),'solutions.html'),
     research:resolve(process.cwd(),'research.html'),
+    about:resolve(process.cwd(),'about.html'),
     team:resolve(process.cwd(),'team.html'),
     press:resolve(process.cwd(),'press.html'),
     news:resolve(process.cwd(),'news.html'),
