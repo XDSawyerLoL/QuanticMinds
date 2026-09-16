@@ -1,4 +1,4 @@
-import { copyFile, mkdir } from 'node:fs/promises';
+import { copyFile, mkdir, cp } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -10,10 +10,11 @@ for(const name of ['script.js','quantic-news-config.js','quantic-news-social.js'
   await copyFile(join(root,name),join(publicDir,name));
 }
 
+// Copy the complete brand/product asset tree instead of maintaining an
+// error-prone allow-list. Vite copies public/ into dist/, which is what
+// GitHub Pages actually deploys.
 const publicAssets=join(publicDir,'assets');
 await mkdir(publicAssets,{recursive:true});
-await copyFile(join(root,'assets','quantic-minds-logo.png'),join(publicAssets,'quantic-minds-logo.png'));
-await copyFile(join(root,'assets','quantic-minds-mark.webp'),join(publicAssets,'quantic-minds-mark.webp'));
-await copyFile(join(root,'assets','quantic-news-logo.svg'),join(publicAssets,'quantic-news-logo.svg'));
+await cp(join(root,'assets'),publicAssets,{recursive:true,force:true});
 
-console.log('Copied static JavaScript, branding CSS and official logo assets for GitHub Pages.');
+console.log('Copied static JavaScript, branding CSS and the complete Quantic Sillage asset tree for GitHub Pages.');
