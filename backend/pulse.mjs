@@ -29,7 +29,9 @@ async function pg(){
   if(!usePostgres)return null;
   if(pgPool)return pgPool;
   const mod=await import('pg');
-  const connectionUrl=new URL(PULSE_DATABASE_URL);\n  if(connectionUrl.searchParams.get('sslmode')==='require')connectionUrl.searchParams.set('sslmode','verify-full');\n  pgPool=new mod.Pool({connectionString:connectionUrl.toString(),max:4});
+  const connectionUrl=new URL(PULSE_DATABASE_URL);
+  if(connectionUrl.searchParams.get('sslmode')==='require')connectionUrl.searchParams.set('sslmode','verify-full');
+  pgPool=new mod.Pool({connectionString:connectionUrl.toString(),max:4});
   await pgPool.query('CREATE TABLE IF NOT EXISTS quantic_pulse_store (store_key VARCHAR(40) PRIMARY KEY, data JSONB NOT NULL, updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW())');
   await pgPool.query('INSERT INTO quantic_pulse_store (store_key,data) VALUES ($1,$2::jsonb) ON CONFLICT (store_key) DO NOTHING',['pulse',JSON.stringify(emptyStore())]);
   return pgPool;
