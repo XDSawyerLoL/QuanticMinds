@@ -3,13 +3,14 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": ">=22"
+    "node": "22.23.x"
   },
   "scripts": {
-    "start": "node start.mjs"
+    "start": "node start.mjs",
+    "test": "node --test pulse.test.mjs"
   },
   "dependencies": {
-    "mysql2": "^3.15.0",
-    "pg": "^8.16.3"
+    "mysql2": "3.15.0",
+    "pg": "8.16.3"
   }
 }
