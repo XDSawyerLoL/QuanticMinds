@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#061827">
+  <title>Quantic Pulse — Quantic Sillage</title>
+  <meta name="description" content="Quantic Pulse : réseau social public et communautaire de l'écosystème Quantic Sillage.">
+  <link rel="stylesheet" href="./site.css?v=20260918-1">
+  <link rel="stylesheet" href="./pulse.css?v=1">
+  <link rel="icon" type="image/svg+xml" href="./assets/quantic-sillage-mark.svg">
+</head>
+<body class="pulse-body">
+  <div class="pulse-shell">
+    <aside class="pulse-sidebar">
+      <a class="pulse-brand" href="index.html" aria-label="Retour à Quantic Sillage">
+        <img src="./assets/quantic-sillage-mark.svg" alt="">
+        <div><span>Quantic</span><strong>Pulse</strong></div>
+      </a>
+      <nav class="pulse-nav" aria-label="Navigation Pulse">
+        <button class="pulse-nav-item active" data-view="home"><span>⌂</span>Accueil</button>
+        <button class="pulse-nav-item" data-view="explore"><span>⌘</span>Explorer</button>
+        <button class="pulse-nav-item" data-view="circles"><span>◉</span>Cercles</button>
+        <button class="pulse-nav-item" data-view="messages"><span>✉</span>Messages</button>
+        <button class="pulse-nav-item" data-view="saved"><span>◇</span>Enregistrés</button>
+        <button class="pulse-nav-item" data-view="profile"><span>◎</span>Profil</button>
+      </nav>
+      <button class="pulse-primary" id="compose-focus">Publier</button>
+      <div class="pulse-account">
+        <div class="pulse-avatar">QS</div>
+        <div><strong>Quantic Sillage</strong><span>@quantic</span></div>
+      </div>
+    </aside>
+
+    <main class="pulse-main">
+      <header class="pulse-topbar">
+        <div><span class="pulse-kicker">Quantic Sillage</span><h1>Pulse</h1></div>
+        <a href="index.html" class="pulse-back">Écosystème ↗</a>
+      </header>
+
+      <section class="pulse-tabs" aria-label="Sélection du fil">
+        <button class="pulse-tab active" data-feed="following">Chronologique</button>
+        <button class="pulse-tab" data-feed="discover">Découverte</button>
+      </section>
+
+      <section class="pulse-composer" id="composer">
+        <div class="pulse-avatar">QS</div>
+        <div class="pulse-compose-main">
+          <textarea id="pulse-text" maxlength="420" placeholder="Qu'est-ce qui mérite de circuler ?"></textarea>
+          <div class="pulse-compose-tools">
+            <div class="pulse-toolset">
+              <button title="Image">▧</button><button title="Lien">↗</button><button title="Sondage">≋</button><button title="Source Quantic News">N</button>
+            </div>
+            <div class="pulse-compose-right"><span id="pulse-count">0 / 420</span><button class="pulse-publish" id="pulse-publish" disabled>Publier</button></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="pulse-feed" id="pulse-feed" aria-live="polite"></section>
+    </main>
+
+    <aside class="pulse-right">
+      <div class="pulse-search"><span>⌕</span><input id="pulse-search" type="search" placeholder="Rechercher sur Pulse"></div>
+      <section class="pulse-panel">
+        <div class="pulse-panel-head"><h2>En ce moment</h2><span>Direct</span></div>
+        <button class="trend"><small>Technologie · maintenant</small><strong>IA locale et privée</strong><span>1 284 publications</span></button>
+        <button class="trend"><small>Quantic News</small><strong>Interfaces post-app</strong><span>642 publications</span></button>
+        <button class="trend"><small>Communautés</small><strong>#BuildInPublic</strong><span>389 publications</span></button>
+      </section>
+      <section class="pulse-panel">
+        <div class="pulse-panel-head"><h2>Cercles à découvrir</h2><a href="#">Voir tout</a></div>
+        <button class="circle"><span class="circle-mark">Q</span><span><strong>Quantic Lab</strong><small>1,8 k membres</small></span><b>+</b></button>
+        <button class="circle"><span class="circle-mark">AI</span><span><strong>IA & Agents</strong><small>4,2 k membres</small></span><b>+</b></button>
+        <button class="circle"><span class="circle-mark">DEV</span><span><strong>Builders FR</strong><small>2,1 k membres</small></span><b>+</b></button>
+      </section>
+      <p class="pulse-privacy">Fil chronologique disponible en permanence · personnalisation désactivable · export des données prévu dans la V1 publique.</p>
+    </aside>
+  </div>
+
+  <nav class="pulse-mobile-nav" aria-label="Navigation mobile">
+    <button class="active" data-view="home">⌂</button><button data-view="explore">⌕</button><button id="mobile-compose">＋</button><button data-view="messages">✉</button><button data-view="profile">◎</button>
+  </nav>
+  <script src="./pulse.js?v=1"></script>
+</body>
+</html>
