@@ -9,6 +9,7 @@
     "start": "node start.mjs"
   },
   "dependencies": {
-    "mysql2": "^3.15.0"
+    "mysql2": "^3.15.0",
+    "pg": "^8.16.3"
   }
 }
