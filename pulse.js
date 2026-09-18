@@ -13,6 +13,7 @@ const authForm=document.getElementById('auth-form');
 const authError=document.getElementById('auth-error');
 
 function esc(v){return String(v||'').replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]})}
+function icon(name,extra=''){return '<svg class="pi '+extra+'" aria-hidden="true"><use href="#'+name+'"></use></svg>'}
 function initials(user){const s=(user?.displayName||user?.handle||'?').trim().split(/\s+/).slice(0,2).map(function(x){return x[0]||''}).join('');return s.toUpperCase()||'?'}
 function timeAgo(iso){const t=Date.parse(iso),d=Math.max(0,Date.now()-t),m=Math.floor(d/60000);if(m<1)return'maintenant';if(m<60)return m+' min';const h=Math.floor(m/60);if(h<24)return h+' h';const days=Math.floor(h/24);if(days<7)return days+' j';return new Date(t).toLocaleDateString('fr-FR',{day:'2-digit',month:'short'})}
 function setStatus(title,text){feed.innerHTML='<div class="pulse-status"><strong>'+esc(title)+'</strong>'+esc(text||'')+'</div>'}
@@ -55,15 +56,15 @@ function renderPost(post){
   return '<article class="pulse-post" data-id="'+esc(post.id)+'">'+
     '<div class="pulse-avatar">'+esc(initials(u))+'</div>'+
     '<div class="pulse-post-main">'+
-      '<div class="pulse-post-head"><button data-profile="'+esc(u.handle)+'">'+esc(u.displayName||u.handle)+'</button>'+(u.verified?'<span class="pulse-badge">◆</span>':'')+'<span>@'+esc(u.handle)+' · '+esc(timeAgo(post.createdAt))+'</span></div>'+
+      '<div class="pulse-post-head"><button data-profile="'+esc(u.handle)+'">'+esc(u.displayName||u.handle)+'</button>'+(u.verified?'<span class="pulse-badge" title="Compte vérifié">'+icon('pi-verified')+'</span>':'')+'<span>@'+esc(u.handle)+' · '+esc(timeAgo(post.createdAt))+'</span></div>'+
       '<p>'+esc(post.body)+'</p>'+quote+
       '<div class="pulse-actions">'+
-        '<button class="pulse-action" data-action="reply">◌ '+Number(post.counts?.replies||0)+'</button>'+
-        '<button class="pulse-action '+(reposted?'active':'')+'" data-action="repost">↻ '+Number(post.counts?.reposts||0)+'</button>'+
-        '<button class="pulse-action '+(liked?'liked':'')+'" data-action="like">♡ '+Number(post.counts?.likes||0)+'</button>'+
-        '<button class="pulse-action '+(bookmarked?'active':'')+'" data-action="bookmark">▱</button>'+
-        '<button class="pulse-action" data-action="share">↗</button>'+
-        '<button class="pulse-action danger" data-action="report">!</button>'+
+        '<button class="pulse-action" data-action="reply" aria-label="Répondre" title="Répondre">'+icon('pi-reply')+'<span>'+Number(post.counts?.replies||0)+'</span></button>'+
+        '<button class="pulse-action '+(reposted?'active':'')+'" data-action="repost" aria-label="Relay" title="Relay">'+icon('pi-relay')+'<span>'+Number(post.counts?.reposts||0)+'</span></button>'+
+        '<button class="pulse-action '+(liked?'liked':'')+'" data-action="like" aria-label="Pulse" title="Pulse">'+icon('pi-pulse','pi-pulse')+'<span>'+Number(post.counts?.likes||0)+'</span></button>'+
+        '<button class="pulse-action '+(bookmarked?'active':'')+'" data-action="bookmark" aria-label="Enregistrer" title="Enregistrer">'+icon('pi-bookmark')+'</button>'+
+        '<button class="pulse-action" data-action="share" aria-label="Partager" title="Partager">'+icon('pi-share')+'</button>'+
+        '<button class="pulse-action danger" data-action="report" aria-label="Signaler" title="Signaler">'+icon('pi-report')+'</button>'+
       '</div>'+
     '</div>'+
   '</article>'
@@ -135,7 +136,7 @@ async function loadMessages(){
     const d=await api('/api/pulse/conversations');
     let html='<section class="pulse-view"><div class="pulse-view-head"><h2>Messages privés</h2><p>Conversations directes entre comptes Pulse.</p></div><form class="pulse-inline-form two" id="new-message"><input name="handle" placeholder="@identifiant" required><input name="body" maxlength="2000" placeholder="Message" required><button class="pulse-mini-button primary">Envoyer</button></form><div class="pulse-card-list">';
     if(!d.conversations.length)html+='<div class="pulse-card"><p>Aucune conversation.</p></div>';
-    d.conversations.forEach(function(c){if(!c.user)return;html+='<button class="pulse-card pulse-user-card" data-conversation="'+esc(c.user.handle)+'"><div class="pulse-avatar">'+esc(initials(c.user))+'</div><div><strong>'+esc(c.user.displayName)+'</strong><small>'+esc(c.lastMessage?.body||'Nouvelle conversation')+'</small></div><span>›</span></button>'});
+    d.conversations.forEach(function(c){if(!c.user)return;html+='<button class="pulse-card pulse-user-card" data-conversation="'+esc(c.user.handle)+'"><div class="pulse-avatar">'+esc(initials(c.user))+'</div><div><strong>'+esc(c.user.displayName)+'</strong><small>'+esc(c.lastMessage?.body||'Nouvelle conversation')+'</small></div><span class="circle-chevron">'+icon('pi-chevron')+'</span></button>'});
     feed.innerHTML=html+'</div></section>';
   }catch(e){setStatus('Messages indisponibles',errorText(e))}
 }
@@ -153,7 +154,7 @@ async function loadConversation(handle){
 async function loadCirclePreview(){
   try{
     const d=await api('/api/pulse/circles'),target=document.getElementById('circle-preview');
-    target.innerHTML=d.circles.slice(0,3).map(function(c){return'<button class="circle" data-view="circles"><span class="circle-mark">'+esc(c.name.slice(0,2).toUpperCase())+'</span><span><strong>'+esc(c.name)+'</strong><small>'+c.memberCount+' membres</small></span><b>›</b></button>'}).join('')||'<div class="pulse-panel-loading">Aucun cercle public.</div>';
+    target.innerHTML=d.circles.slice(0,3).map(function(c){return'<button class="circle" data-view="circles"><span class="circle-mark">'+esc(c.name.slice(0,2).toUpperCase())+'</span><span><strong>'+esc(c.name)+'</strong><small>'+c.memberCount+' membres</small></span><span class="circle-chevron">'+icon('pi-chevron')+'</span></button>'}).join('')||'<div class="pulse-panel-loading">Aucun cercle public.</div>';
   }catch{document.getElementById('circle-preview').innerHTML='<div class="pulse-panel-loading">Indisponible</div>'}
 }
 function setReply(postId,handle){state.replyTo=postId;const context=document.getElementById('pulse-context');context.hidden=false;context.textContent='Réponse à @'+handle;document.getElementById('cancel-context').hidden=false;textarea.focus()}
