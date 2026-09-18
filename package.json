@@ -6,17 +6,21 @@
   "scripts": {
     "dev": "vite",
     "build": "node scripts/generate-news-articles.mjs && node scripts/news-feed-snapshot.mjs && node scripts/prepare-public.mjs && vite build && node scripts/finalize-pages.mjs",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:pulse-ui": "node scripts/pulse-ui-contract.mjs"
   },
   "dependencies": {
-    "framer-motion": "latest",
+    "framer-motion": "13.4.0",
     "lucide-react": "0.469.0",
-    "react": "latest",
-    "react-dom": "latest",
-    "react-router-dom": "latest"
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-router-dom": "7.18.3"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "latest",
-    "vite": "latest"
+    "@vitejs/plugin-react": "6.1.1",
+    "vite": "8.3.0"
+  },
+  "engines": {
+    "node": "22.23.x"
   }
 }
