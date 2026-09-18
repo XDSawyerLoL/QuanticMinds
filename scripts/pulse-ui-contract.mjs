@@ -29,6 +29,8 @@ assert.ok(html.includes('type="module" src="./pulse/app.js'), 'Pulse must load t
 assert.ok(html.includes('id="auth-modal"'), 'Authentication modal is required');
 assert.ok(html.includes('id="pulse-feed"'), 'Feed container is required');
 assert.ok(html.includes('id="pulse-publish"'), 'Publish control is required');
+const mailLinks=[...html.matchAll(/href=["']https:\/\/quanticmail\.onrender\.com["']/g)];
+assert.ok(mailLinks.length>=3, 'QuanticMail must remain directly accessible from Pulse desktop and mobile navigation');
 
 for (const requiredModule of ['app.js','core.js','render.js','session.js','views.js']) {
   assert.ok(moduleFiles.includes(requiredModule), 'Missing Pulse module: ' + requiredModule);
