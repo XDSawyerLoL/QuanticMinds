@@ -16,7 +16,7 @@ jobs:
           node-version: '22.23.2'
       - name: Install frontend dependencies
         run: npm install --ignore-scripts
-      - name: Validate frontend JavaScript
+      - name: Audit frontend production dependencies\n        run: npm audit --omit=dev --audit-level=high\n      - name: Validate frontend JavaScript
         run: |
           node --check pulse/core.js
           node --check pulse/session.js
@@ -30,7 +30,7 @@ jobs:
       - name: Install backend dependencies
         working-directory: backend
         run: npm install --ignore-scripts
-      - name: Validate Pulse backend
+      - name: Audit backend dependencies\n        working-directory: backend\n        run: npm audit --audit-level=high\n      - name: Validate Pulse backend
         working-directory: backend
         run: |
           node --check pulse.mjs
