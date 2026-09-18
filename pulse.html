@@ -7,7 +7,7 @@
   <title>Quantic Pulse — Quantic Sillage</title>
   <meta name="description" content="Quantic Pulse : réseau social public et communautaire de l'écosystème Quantic Sillage.">
   <link rel="stylesheet" href="./site.css?v=20260918-1">
-  <link rel="stylesheet" href="./pulse.css?v=4">
+  <link rel="stylesheet" href="./pulse.css?v=5">
   <link rel="icon" type="image/svg+xml" href="./assets/quantic-sillage-mark.svg">
 </head>
 <body class="pulse-body">
@@ -17,6 +17,7 @@
     <symbol id="pi-circles" viewBox="0 0 24 24"><circle cx="9" cy="12" r="5.3"/><circle cx="15" cy="12" r="5.3"/></symbol>
     <symbol id="pi-bell" viewBox="0 0 24 24"><path d="M6.2 16.5h11.6l-1.4-2V10a4.4 4.4 0 0 0-8.8 0v4.5l-1.4 2Z"/><path d="M10 19a2.2 2.2 0 0 0 4 0"/></symbol>
     <symbol id="pi-message" viewBox="0 0 24 24"><path d="M4 5.5h16v11H8l-4 3v-14Z"/><path d="M8 10.5h8"/></symbol>
+    <symbol id="pi-mail" viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="2.2"/><path d="m5 7 7 5 7-5"/></symbol>
     <symbol id="pi-bookmark" viewBox="0 0 24 24"><path d="M7 4.5h10v15l-5-3.2L7 19.5v-15Z"/></symbol>
     <symbol id="pi-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.4"/><path d="M5 19a7 7 0 0 1 14 0"/></symbol>
     <symbol id="pi-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
@@ -43,6 +44,7 @@
         <button class="pulse-nav-item" data-view="circles"><svg class="pi " aria-hidden="true"><use href="#pi-circles"></use></svg><span class="pulse-nav-label">Communautés</span></button>
         <button class="pulse-nav-item" data-view="notifications"><svg class="pi " aria-hidden="true"><use href="#pi-bell"></use></svg><span class="pulse-nav-label">Notifications</span></button>
         <button class="pulse-nav-item" data-view="messages"><svg class="pi " aria-hidden="true"><use href="#pi-message"></use></svg><span class="pulse-nav-label">Messages</span></button>
+        <a class="pulse-nav-item pulse-product-link" href="https://quanticmail.onrender.com" aria-label="Ouvrir QuanticMail"><svg class="pi" aria-hidden="true"><use href="#pi-mail"></use></svg><span class="pulse-nav-label">QuanticMail</span><svg class="pi pulse-product-external" aria-hidden="true"><use href="#pi-external"></use></svg></a>
         <div class="pulse-nav-separator" aria-hidden="true"></div>
         <button class="pulse-nav-item" data-view="saved"><svg class="pi " aria-hidden="true"><use href="#pi-bookmark"></use></svg><span class="pulse-nav-label">Enregistrés</span></button>
         <button class="pulse-nav-item" data-view="profile"><svg class="pi " aria-hidden="true"><use href="#pi-user"></use></svg><span class="pulse-nav-label">Profil</span></button>
@@ -58,6 +60,7 @@
       <header class="pulse-topbar">
         <div><span class="pulse-kicker">Quantic Pulse</span><h1 id="view-title">Accueil</h1></div>
         <div class="pulse-top-actions">
+          <a class="pulse-top-button pulse-mail-access" href="https://quanticmail.onrender.com"><svg class="pi" aria-hidden="true"><use href="#pi-mail"></use></svg><span>QuanticMail</span></a>
           <button class="pulse-top-button" id="auth-button">Se connecter</button>
           <a href="index.html" class="pulse-back">Écosystème <svg class="pi " aria-hidden="true"><use href="#pi-external"></use></svg></a>
         </div>
@@ -117,7 +120,7 @@
   </div>
 
   <nav class="pulse-mobile-nav" aria-label="Navigation mobile">
-    <button class="active" data-view="home" aria-label="Accueil"><svg class="pi " aria-hidden="true"><use href="#pi-home"></use></svg></button><button data-view="explore" aria-label="Explorer"><svg class="pi " aria-hidden="true"><use href="#pi-search"></use></svg></button><button id="mobile-compose" aria-label="Publier"><svg class="pi " aria-hidden="true"><use href="#pi-plus"></use></svg></button><button data-view="messages" aria-label="Messages"><svg class="pi " aria-hidden="true"><use href="#pi-message"></use></svg></button><button data-view="profile" aria-label="Profil"><svg class="pi " aria-hidden="true"><use href="#pi-user"></use></svg></button>
+    <button class="active" data-view="home" aria-label="Accueil"><svg class="pi " aria-hidden="true"><use href="#pi-home"></use></svg></button><button data-view="explore" aria-label="Explorer"><svg class="pi " aria-hidden="true"><use href="#pi-search"></use></svg></button><button id="mobile-compose" aria-label="Publier"><svg class="pi " aria-hidden="true"><use href="#pi-plus"></use></svg></button><button data-view="messages" aria-label="Messages"><svg class="pi " aria-hidden="true"><use href="#pi-message"></use></svg></button><a href="https://quanticmail.onrender.com" aria-label="Ouvrir QuanticMail"><svg class="pi" aria-hidden="true"><use href="#pi-mail"></use></svg></a><button data-view="profile" aria-label="Profil"><svg class="pi " aria-hidden="true"><use href="#pi-user"></use></svg></button>
   </nav>
 
   <div class="pulse-modal" id="auth-modal" hidden>
