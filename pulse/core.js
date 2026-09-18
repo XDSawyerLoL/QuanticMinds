@@ -57,7 +57,9 @@ export function errorText(e){
     weak_password:'Le mot de passe doit contenir au moins 10 caractères.',
     rate_limited:'Trop de requêtes. Réessaie plus tard.',
     not_found:'Élément introuvable.',
-    blocked:'Cette conversation est bloquée.'
+    blocked:'Cette conversation est bloquée.',
+    network_error:'Connexion au service Pulse impossible. Recharge la page puis réessaie.',
+    request_failed:'La requête Pulse a échoué. Réessaie dans un instant.'
   };
   return map[e?.message]||e?.message||'Une erreur est survenue.';
 }
@@ -65,7 +67,14 @@ export function errorText(e){
 export async function api(path,options={}){
   const headers={'content-type':'application/json',...(options.headers||{})};
   if(state.token)headers.authorization='Bearer '+state.token;
-  const response=await fetch(API_BASE+path,{...options,headers});
+  let response;
+  try{
+    response=await fetch(API_BASE+path,{...options,headers});
+  }catch(cause){
+    const err=new Error('network_error');
+    err.cause=cause;
+    throw err;
+  }
   const data=await response.json().catch(function(){return{}});
   if(!response.ok){
     const err=new Error(data.error||'request_failed');
