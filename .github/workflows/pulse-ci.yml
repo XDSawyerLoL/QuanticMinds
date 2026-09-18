@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [main]
   push:
-    branches: [feature/quantic-pulse-v1]
+    branches: [main, feature/quantic-pulse-v1]
 
 jobs:
   validate:
@@ -14,8 +14,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22.23.2'
+
       - name: Install frontend dependencies
         run: npm install --ignore-scripts
+
+      - name: Audit frontend production dependencies
+        run: npm audit --omit=dev --audit-level=high
+
       - name: Validate frontend JavaScript
         run: |
           node --check pulse/core.js
@@ -23,22 +28,32 @@ jobs:
           node --check pulse/render.js
           node --check pulse/views.js
           node --check pulse/app.js
+
       - name: Validate Pulse DOM contract
         run: npm run test:pulse-ui
+
       - name: Build site
         run: npm run build
+
       - name: Install backend dependencies
         working-directory: backend
         run: npm install --ignore-scripts
+
+      - name: Audit backend dependencies
+        working-directory: backend
+        run: npm audit --audit-level=high
+
       - name: Validate Pulse backend
         working-directory: backend
         run: |
           node --check pulse.mjs
           node --check server.mjs
           node --check start.mjs
+
       - name: Test Pulse API flows
         working-directory: backend
         run: npm test
+
       - name: Import Pulse module
         working-directory: backend
         run: node -e "import('./pulse.mjs').then(async m => { console.log(await m.pulseInfo()) })"
