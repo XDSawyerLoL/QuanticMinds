@@ -7,7 +7,7 @@
   },
   "scripts": {
     "start": "node start.mjs",
-    "test": "node --test pulse.test.mjs"
+    "test": "node --test *.test.mjs"
   },
   "dependencies": {
     "mysql2": "3.24.4",

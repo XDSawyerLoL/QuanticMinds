@@ -9,6 +9,13 @@ const PUBLIC_BASE_URL=String(process.env.PUBLIC_BASE_URL||'').replace(/\/$/,'');
 const FRONTEND_URL=process.env.FRONTEND_URL||'https://xdsawyerlol.github.io/QuanticMinds/news.html';
 const FRONTEND_ORIGIN=process.env.FRONTEND_ORIGIN||new URL(FRONTEND_URL).origin;
 const PULSE_FRONTEND_ORIGIN=process.env.PULSE_FRONTEND_ORIGIN||FRONTEND_ORIGIN;
+const PULSE_ALLOWED_ORIGINS=new Set([
+  FRONTEND_ORIGIN,
+  PULSE_FRONTEND_ORIGIN,
+  'https://xdsawyerlol.github.io',
+  'https://mediumorchid-badger-314305.hostingersite.com',
+  ...String(process.env.PULSE_ALLOWED_ORIGINS||'').split(',').map(v=>v.trim()).filter(Boolean)
+]);
 const LINKEDIN_CLIENT_ID=process.env.LINKEDIN_CLIENT_ID||'';
 const LINKEDIN_CLIENT_SECRET=process.env.LINKEDIN_CLIENT_SECRET||'';
 const LINKEDIN_REDIRECT_URI=process.env.LINKEDIN_REDIRECT_URI||`${PUBLIC_BASE_URL}/auth/linkedin/callback`;
@@ -25,7 +32,7 @@ let writeQueue=Promise.resolve();
 
 function json(res,status,body,extra={}){res.writeHead(status,{'content-type':'application/json; charset=utf-8','cache-control':'no-store',...extra});res.end(JSON.stringify(body))}
 function redirect(res,location){res.writeHead(302,{location,'cache-control':'no-store','referrer-policy':'no-referrer'});res.end()}
-function cors(req){const origin=req.headers.origin;return [FRONTEND_ORIGIN,PULSE_FRONTEND_ORIGIN].includes(origin)?{'access-control-allow-origin':origin,'vary':'Origin','access-control-allow-headers':'authorization, content-type, x-cron-secret','access-control-allow-methods':'GET,PUT,PATCH,POST,DELETE,OPTIONS'}:{}}
+function cors(req){const origin=req.headers.origin;return origin&&PULSE_ALLOWED_ORIGINS.has(origin)?{'access-control-allow-origin':origin,'vary':'Origin','access-control-allow-headers':'authorization, content-type, x-cron-secret','access-control-allow-methods':'GET,PUT,PATCH,POST,DELETE,OPTIONS'}:{}}
 function sha(v){return createHash('sha256').update(String(v)).digest('hex')}
 function safeEqual(a,b){const aa=Buffer.from(String(a)),bb=Buffer.from(String(b));return aa.length===bb.length&&timingSafeEqual(aa,bb)}
 function missingConfig(){return Object.entries({PUBLIC_BASE_URL,LINKEDIN_CLIENT_ID,LINKEDIN_CLIENT_SECRET,STATE_SECRET,TOKEN_ENCRYPTION_KEY,CRON_SECRET}).filter(([,v])=>!v).map(([k])=>k)}
