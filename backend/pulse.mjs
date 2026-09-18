@@ -6,9 +6,11 @@ const DATA_DIR=process.env.DATA_DIR||'./data';
 const FILE=join(DATA_DIR,'pulse.json');
 const SESSION_MS=2592000000;
 const HANDLE_RE=/^[a-z0-9_]{3,24}$/;
+const PULSE_DATABASE_URL=process.env.PULSE_DATABASE_URL||'';
 const MYSQL={host:process.env.PULSE_DB_HOST||'',port:Number(process.env.PULSE_DB_PORT||3306),user:process.env.PULSE_DB_USER||'',password:process.env.PULSE_DB_PASSWORD||'',database:process.env.PULSE_DB_NAME||''};
-const useMysql=!!(MYSQL.host&&MYSQL.user&&MYSQL.database);
-let mysqlPool=null,writeQueue=Promise.resolve();
+const usePostgres=!!PULSE_DATABASE_URL;
+const useMysql=!usePostgres&&!!(MYSQL.host&&MYSQL.user&&MYSQL.database);
+let pgPool=null,mysqlPool=null,writeQueue=Promise.resolve();
 const rate=new Map();
 
 function emptyStore(){return{version:1,users:{},handles:{},sessions:{},posts:{},follows:{},likes:{},reposts:{},bookmarks:{},circles:{},circleMembers:{},notifications:{},reports:{},blocks:{},conversations:{},messages:{}}}
@@ -23,6 +25,15 @@ function hashPassword(password,salt=randomBytes(16).toString('hex')){return{salt
 function verifyPassword(password,user){const a=scryptSync(String(password),user.passwordSalt,64),b=Buffer.from(user.passwordHash,'hex');return a.length===b.length&&timingSafeEqual(a,b)}
 function allowRate(req,bucket,max,windowMs){const ip=String(req.headers['x-forwarded-for']||req.socket?.remoteAddress||'unknown').split(',')[0].trim(),key=ip+':'+bucket,t=Date.now(),cur=rate.get(key);if(!cur||t-cur.start>windowMs){rate.set(key,{start:t,count:1});return true}cur.count++;return cur.count<=max}
 
+async function pg(){
+  if(!usePostgres)return null;
+  if(pgPool)return pgPool;
+  const mod=await import('pg');
+  pgPool=new mod.Pool({connectionString:PULSE_DATABASE_URL,ssl:{rejectUnauthorized:false},max:4});
+  await pgPool.query('CREATE TABLE IF NOT EXISTS quantic_pulse_store (store_key VARCHAR(40) PRIMARY KEY, data JSONB NOT NULL, updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW())');
+  await pgPool.query('INSERT INTO quantic_pulse_store (store_key,data) VALUES ($1,$2::jsonb) ON CONFLICT (store_key) DO NOTHING',['pulse',JSON.stringify(emptyStore())]);
+  return pgPool;
+}
 async function pool(){
   if(!useMysql)return null;
   if(mysqlPool)return mysqlPool;
@@ -34,10 +45,12 @@ async function pool(){
 }
 async function ensureFile(){await mkdir(DATA_DIR,{recursive:true});try{await readFile(FILE,'utf8')}catch{await writeFile(FILE,JSON.stringify(emptyStore(),null,2))}}
 async function readStore(){
+  if(usePostgres){const p=await pg(),r=await p.query('SELECT data FROM quantic_pulse_store WHERE store_key=$1',['pulse']);if(!r.rows.length)return emptyStore();const data=r.rows[0].data;return typeof data==='string'?JSON.parse(data):data}
   if(useMysql){const p=await pool(),[rows]=await p.query('SELECT data FROM quantic_pulse_store WHERE store_key=?',['pulse']);if(!rows.length)return emptyStore();try{return JSON.parse(rows[0].data)}catch{return emptyStore()}}
   await ensureFile();try{return JSON.parse(await readFile(FILE,'utf8'))}catch{return emptyStore()}
 }
 async function mutateStore(fn){
+  if(usePostgres){const p=await pg(),client=await p.connect();try{await client.query('BEGIN');const r=await client.query('SELECT data FROM quantic_pulse_store WHERE store_key=$1 FOR UPDATE',['pulse']);const raw=r.rows.length?r.rows[0].data:emptyStore(),store=typeof raw==='string'?JSON.parse(raw):raw,out=await fn(store);await client.query('INSERT INTO quantic_pulse_store (store_key,data,updated_at) VALUES ($1,$2::jsonb,NOW()) ON CONFLICT (store_key) DO UPDATE SET data=EXCLUDED.data,updated_at=NOW()',['pulse',JSON.stringify(store)]);await client.query('COMMIT');return out}catch(e){await client.query('ROLLBACK');throw e}finally{client.release()}}
   if(useMysql){const p=await pool(),conn=await p.getConnection();try{await conn.beginTransaction();const[rows]=await conn.query('SELECT data FROM quantic_pulse_store WHERE store_key=? FOR UPDATE',['pulse']);const store=rows.length?JSON.parse(rows[0].data):emptyStore(),out=await fn(store);await conn.query('INSERT INTO quantic_pulse_store (store_key,data) VALUES (?,?) ON DUPLICATE KEY UPDATE data=VALUES(data)',['pulse',JSON.stringify(store)]);await conn.commit();return out}catch(e){await conn.rollback();throw e}finally{conn.release()}}
   let out;writeQueue=writeQueue.then(async()=>{const store=await readStore();out=await fn(store);const tmp=FILE+'.'+process.pid+'.'+Date.now()+'.tmp';await writeFile(tmp,JSON.stringify(store,null,2));await rename(tmp,FILE)});await writeQueue;return out
 }
@@ -61,7 +74,7 @@ function createSession(store,userId){const token=randomBytes(32).toString('base6
 function notify(store,userId,payload){if(!userId||userId===payload.actorId)return;if(!store.notifications[userId])store.notifications[userId]=[];store.notifications[userId].unshift({id:id('n_'),createdAt:now(),read:false,...payload});store.notifications[userId]=store.notifications[userId].slice(0,300)}
 function conversationKey(a,b){return[a,b].sort().join(':')}
 
-export async function pulseInfo(){return{storage:useMysql?'mysql':'json',mysqlConfigured:useMysql}}
+export async function pulseInfo(){return{storage:usePostgres?'postgres':useMysql?'mysql':'json',postgresConfigured:usePostgres,mysqlConfigured:useMysql}}
 
 export async function handlePulse(req,res,url,corsHeaders={}){
   if(!url.pathname.startsWith('/api/pulse/'))return false;
@@ -69,7 +82,7 @@ export async function handlePulse(req,res,url,corsHeaders={}){
   try{
     if(!allowRate(req,'all',180,60000)){json(res,429,{error:'rate_limited'},corsHeaders);return true}
 
-    if(route==='/api/pulse/health'&&req.method==='GET'){json(res,200,{ok:true,service:'quantic-pulse',storage:useMysql?'mysql':'json'},corsHeaders);return true}
+    if(route==='/api/pulse/health'&&req.method==='GET'){json(res,200,{ok:true,service:'quantic-pulse',storage:usePostgres?'postgres':useMysql?'mysql':'json'},corsHeaders);return true}
 
     if(route==='/api/pulse/auth/register'&&req.method==='POST'){
       if(!allowRate(req,'register',8,3600000)){json(res,429,{error:'rate_limited'},corsHeaders);return true}
@@ -161,5 +174,6 @@ export async function handlePulse(req,res,url,corsHeaders={}){
   }catch(e){console.error('[pulse]',e);json(res,e.status||500,{error:e.message||'internal_error'},corsHeaders);return true}
 }
 
-if(useMysql)pool().catch(e=>console.error('[pulse] mysql init failed',e));
+if(usePostgres)pg().catch(e=>console.error('[pulse] postgres init failed',e));
+else if(useMysql)pool().catch(e=>console.error('[pulse] mysql init failed',e));
 else ensureFile().catch(e=>console.error('[pulse] file init failed',e));
