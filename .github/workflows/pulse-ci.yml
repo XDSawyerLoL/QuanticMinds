@@ -17,7 +17,12 @@ jobs:
       - name: Install frontend dependencies
         run: npm install --ignore-scripts
       - name: Validate frontend JavaScript
-        run: node --check pulse.js
+        run: |
+          node --check pulse/core.js
+          node --check pulse/session.js
+          node --check pulse/render.js
+          node --check pulse/views.js
+          node --check pulse/app.js
       - name: Validate Pulse DOM contract
         run: npm run test:pulse-ui
       - name: Build site
