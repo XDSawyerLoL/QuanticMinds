@@ -58,3 +58,75 @@ GET /api/pulse/export
 
 ## Suite
 Remplacer localStorage par le stockage serveur, ajouter l'authentification Quantic commune et implémenter les endpoints Pulse sans casser le site public existant.
+
+
+## Implémentation serveur ajoutée
+La V1 n'est plus limitée au localStorage. Le backend Node 22 expose maintenant une API sociale persistante :
+
+- inscription, connexion, sessions Bearer 30 jours ;
+- mots de passe dérivés avec scrypt + sel individuel ;
+- publications 420 caractères, réponses et citations ;
+- likes, reposts et favoris ;
+- abonnements et profils ;
+- recherche comptes/publications ;
+- cercles publics/privés et adhésion ;
+- notifications ;
+- messages privés ;
+- blocage, signalement et limites de débit ;
+- export intégral des données d'un compte.
+
+## Persistance
+Pulse utilise MySQL lorsque les variables ci-dessous sont présentes. Sans elles, un fichier data/pulse.json est utilisé pour le développement.
+
+PULSE_DB_HOST
+PULSE_DB_PORT=3306
+PULSE_DB_USER
+PULSE_DB_PASSWORD
+PULSE_DB_NAME
+
+La table quantic_pulse_store est créée automatiquement au démarrage. La V1 stocke l'état Pulse sous forme JSON transactionnelle dans une ligne MySQL verrouillée pendant les mutations. Ce choix garde le déploiement simple tout en assurant une persistance réelle. Une normalisation SQL pourra être faite lorsque la charge le justifiera.
+
+## Déploiement
+Le frontend utilise pulse-config.js et pointe par défaut vers :
+https://quanticminds.onrender.com
+
+Le backend accepte par défaut l'origine du frontend Quantic News. Une origine spécifique peut être définie avec :
+PULSE_FRONTEND_ORIGIN
+
+## API V1 effective
+GET    /api/pulse/health
+POST   /api/pulse/auth/register
+POST   /api/pulse/auth/login
+POST   /api/pulse/auth/logout
+GET    /api/pulse/me
+PATCH  /api/pulse/me
+GET    /api/pulse/feed
+POST   /api/pulse/posts
+GET    /api/pulse/posts/:id
+DELETE /api/pulse/posts/:id
+GET    /api/pulse/posts/:id/replies
+POST   /api/pulse/posts/:id/like
+POST   /api/pulse/posts/:id/repost
+POST   /api/pulse/posts/:id/bookmark
+GET    /api/pulse/users/:handle
+POST   /api/pulse/users/:handle/follow
+POST   /api/pulse/users/:handle/block
+GET    /api/pulse/search
+GET    /api/pulse/circles
+POST   /api/pulse/circles
+POST   /api/pulse/circles/:id/join
+GET    /api/pulse/notifications
+POST   /api/pulse/notifications/read
+GET    /api/pulse/me/bookmarks
+POST   /api/pulse/report
+GET    /api/pulse/conversations
+POST   /api/pulse/messages
+GET    /api/pulse/messages/:handle
+GET    /api/pulse/export
+
+## Limites assumées de V1
+- pas encore de récupération de mot de passe par email ;
+- médias non encore téléversés dans Pulse ;
+- cercles privés sans système d'invitation dans cette première version ;
+- stockage MySQL V1 transactionnel mais non normalisé pour une très forte charge ;
+- pas encore de fédération ActivityPub.
