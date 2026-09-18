@@ -7,7 +7,7 @@
   <title>Quantic Pulse — Quantic Sillage</title>
   <meta name="description" content="Quantic Pulse : réseau social public et communautaire de l'écosystème Quantic Sillage.">
   <link rel="stylesheet" href="./site.css?v=20260918-1">
-  <link rel="stylesheet" href="./pulse.css?v=3">
+  <link rel="stylesheet" href="./pulse.css?v=4">
   <link rel="icon" type="image/svg+xml" href="./assets/quantic-sillage-mark.svg">
 </head>
 <body class="pulse-body">
@@ -40,9 +40,10 @@
       <nav class="pulse-nav" aria-label="Navigation Pulse">
         <button class="pulse-nav-item active" data-view="home"><svg class="pi " aria-hidden="true"><use href="#pi-home"></use></svg><span class="pulse-nav-label">Accueil</span></button>
         <button class="pulse-nav-item" data-view="explore"><svg class="pi " aria-hidden="true"><use href="#pi-search"></use></svg><span class="pulse-nav-label">Explorer</span></button>
-        <button class="pulse-nav-item" data-view="circles"><svg class="pi " aria-hidden="true"><use href="#pi-circles"></use></svg><span class="pulse-nav-label">Cercles</span></button>
+        <button class="pulse-nav-item" data-view="circles"><svg class="pi " aria-hidden="true"><use href="#pi-circles"></use></svg><span class="pulse-nav-label">Communautés</span></button>
         <button class="pulse-nav-item" data-view="notifications"><svg class="pi " aria-hidden="true"><use href="#pi-bell"></use></svg><span class="pulse-nav-label">Notifications</span></button>
         <button class="pulse-nav-item" data-view="messages"><svg class="pi " aria-hidden="true"><use href="#pi-message"></use></svg><span class="pulse-nav-label">Messages</span></button>
+        <div class="pulse-nav-separator" aria-hidden="true"></div>
         <button class="pulse-nav-item" data-view="saved"><svg class="pi " aria-hidden="true"><use href="#pi-bookmark"></use></svg><span class="pulse-nav-label">Enregistrés</span></button>
         <button class="pulse-nav-item" data-view="profile"><svg class="pi " aria-hidden="true"><use href="#pi-user"></use></svg><span class="pulse-nav-label">Profil</span></button>
       </nav>
@@ -55,16 +56,29 @@
 
     <main class="pulse-main">
       <header class="pulse-topbar">
-        <div><span class="pulse-kicker">Quantic Sillage</span><h1 id="view-title">Pulse</h1></div>
+        <div><span class="pulse-kicker">Quantic Pulse</span><h1 id="view-title">Accueil</h1></div>
         <div class="pulse-top-actions">
           <button class="pulse-top-button" id="auth-button">Se connecter</button>
           <a href="index.html" class="pulse-back">Écosystème <svg class="pi " aria-hidden="true"><use href="#pi-external"></use></svg></a>
         </div>
       </header>
 
-      <section class="pulse-tabs" id="feed-tabs" aria-label="Sélection du fil">
-        <button class="pulse-tab active" data-feed="following">Chronologique</button>
-        <button class="pulse-tab" data-feed="discover">Découverte</button>
+      <section class="pulse-welcome" id="pulse-welcome">
+        <div class="pulse-welcome-mark"><svg class="pi" aria-hidden="true"><use href="#pi-pulse"></use></svg></div>
+        <div class="pulse-welcome-copy">
+          <span class="pulse-kicker">Bienvenue sur Pulse</span>
+          <h2>Suivez. Publiez. Échangez.</h2>
+          <p>Vous pouvez lire Pulse sans compte. Créez-en un pour publier, suivre des personnes, rejoindre des communautés et envoyer des messages.</p>
+          <div class="pulse-welcome-actions">
+            <button class="pulse-welcome-primary" id="welcome-register">Créer mon compte</button>
+            <button class="pulse-welcome-secondary" id="welcome-login">J’ai déjà un compte</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="pulse-tabs" id="feed-tabs" aria-label="Choisir le fil à afficher">
+        <button class="pulse-tab active" data-feed="following"><strong id="feed-following-label">Récent</strong><small id="feed-following-help">Les publications les plus récentes</small></button>
+        <button class="pulse-tab" data-feed="discover"><strong>Découvrir</strong><small>Des publications que vous ne suivez pas encore</small></button>
       </section>
 
       <section class="pulse-composer" id="composer">
@@ -86,15 +100,16 @@
     </main>
 
     <aside class="pulse-right">
-      <div class="pulse-search"><svg class="pi " aria-hidden="true"><use href="#pi-search"></use></svg><input id="pulse-search" type="search" placeholder="Rechercher sur Pulse"></div>
-      <section class="pulse-panel">
-        <div class="pulse-panel-head"><h2>Pulse V1</h2><span id="api-state">Connexion…</span></div>
-        <div class="pulse-info-row"><strong>Fil</strong><span>Chronologique disponible en permanence</span></div>
-        <div class="pulse-info-row"><strong>Données</strong><span>Export intégral depuis le profil</span></div>
-        <div class="pulse-info-row"><strong>Modération</strong><span>Blocage et signalement intégrés</span></div>
+      <div class="pulse-search"><svg class="pi " aria-hidden="true"><use href="#pi-search"></use></svg><input id="pulse-search" type="search" placeholder="Rechercher des personnes ou des sujets"></div>
+      <section class="pulse-panel pulse-guide">
+        <div class="pulse-panel-head"><h2>Comment ça marche ?</h2><span id="api-state">Connexion…</span></div>
+        <div class="pulse-guide-step"><b>1</b><div><strong>Lisez</strong><span>Parcourez les publications récentes ou utilisez Découvrir.</span></div></div>
+        <div class="pulse-guide-step"><b>2</b><div><strong>Participez</strong><span>Répondez, envoyez un Pulse ou relayez une publication.</span></div></div>
+        <div class="pulse-guide-step"><b>3</b><div><strong>Suivez</strong><span>Abonnez-vous aux personnes et communautés qui vous intéressent.</span></div></div>
+        <div class="pulse-action-key"><span><svg class="pi" aria-hidden="true"><use href="#pi-pulse"></use></svg><strong>Pulse</strong> = apprécier</span><span><svg class="pi" aria-hidden="true"><use href="#pi-relay"></use></svg><strong>Relayer</strong> = repartager</span></div>
       </section>
       <section class="pulse-panel">
-        <div class="pulse-panel-head"><h2>Cercles à découvrir</h2><button class="pulse-link-button" data-view="circles">Voir tout</button></div>
+        <div class="pulse-panel-head"><h2>Communautés à découvrir</h2><button class="pulse-link-button" data-view="circles">Voir tout</button></div>
         <div id="circle-preview"><div class="pulse-panel-loading">Chargement…</div></div>
       </section>
       <p class="pulse-privacy">Pas de publicité comportementale · pseudonymat autorisé · personnalisation désactivable.</p>
@@ -123,6 +138,6 @@
   </div>
 
   <script src="./pulse-config.js?v=1"></script>
-  <script src="./pulse.js?v=3"></script>
+  <script src="./pulse.js?v=4"></script>
 </body>
 </html>
