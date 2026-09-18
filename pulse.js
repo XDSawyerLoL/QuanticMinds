@@ -11,6 +11,9 @@ const viewTitle=document.getElementById('view-title');
 const authModal=document.getElementById('auth-modal');
 const authForm=document.getElementById('auth-form');
 const authError=document.getElementById('auth-error');
+const welcome=document.getElementById('pulse-welcome');
+const followingLabel=document.getElementById('feed-following-label');
+const followingHelp=document.getElementById('feed-following-help');
 
 function esc(v){return String(v||'').replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]})}
 function icon(name,extra=''){return '<svg class="pi '+extra+'" aria-hidden="true"><use href="#'+name+'"></use></svg>'}
@@ -39,15 +42,17 @@ function updateAuthModal(){
 function updateAccount(){
   const user=state.user;
   const name=document.getElementById('account-name'),handle=document.getElementById('account-handle'),av=document.getElementById('account-avatar'),cav=document.getElementById('composer-avatar'),button=document.getElementById('auth-button');
-  if(user){name.textContent=user.displayName;handle.textContent='@'+user.handle;av.textContent=initials(user);cav.textContent=initials(user);button.textContent='@'+user.handle;textarea.placeholder="Qu'est-ce qui mérite de circuler ?"}
-  else{name.textContent='Connexion';handle.textContent='Créer un compte';av.textContent='?';cav.textContent='?';button.textContent='Se connecter';textarea.placeholder='Connecte-toi pour publier';}
+  if(user){name.textContent=user.displayName;handle.textContent='@'+user.handle;av.textContent=initials(user);cav.textContent=initials(user);button.textContent='@'+user.handle;textarea.placeholder='Écrivez une publication…';followingLabel.textContent='Abonnements';followingHelp.textContent='Les comptes que vous suivez';}
+  else{name.textContent='Connexion';handle.textContent='Créer un compte';av.textContent='?';cav.textContent='?';button.textContent='Se connecter';textarea.placeholder='Écrivez une publication…';followingLabel.textContent='Récent';followingHelp.textContent='Les publications les plus récentes';}
+  if(state.view==='home'){composer.hidden=!user;welcome.hidden=!!user;}
 }
 function requireAuth(){if(state.user)return true;openAuth('login');return false}
 function setView(view,title){
   state.view=view;viewTitle.textContent=title||'Pulse';
   document.querySelectorAll('[data-view]').forEach(function(b){b.classList.toggle('active',b.dataset.view===view)});
   feedTabs.hidden=view!=='home';
-  composer.hidden=view!=='home';
+  composer.hidden=view!=='home'||!state.user;
+  welcome.hidden=view!=='home'||!!state.user;
 }
 function renderPost(post){
   const u=post.author||{},liked=post.viewer?.liked,reposted=post.viewer?.reposted,bookmarked=post.viewer?.bookmarked;
@@ -59,9 +64,9 @@ function renderPost(post){
       '<div class="pulse-post-head"><button data-profile="'+esc(u.handle)+'">'+esc(u.displayName||u.handle)+'</button>'+(u.verified?'<span class="pulse-badge" title="Compte vérifié">'+icon('pi-verified')+'</span>':'')+'<span>@'+esc(u.handle)+' · '+esc(timeAgo(post.createdAt))+'</span></div>'+
       '<p>'+esc(post.body)+'</p>'+quote+
       '<div class="pulse-actions">'+
-        '<button class="pulse-action" data-action="reply" aria-label="Répondre" title="Répondre">'+icon('pi-reply')+'<span>'+Number(post.counts?.replies||0)+'</span></button>'+
-        '<button class="pulse-action '+(reposted?'active':'')+'" data-action="repost" aria-label="Relay" title="Relay">'+icon('pi-relay')+'<span>'+Number(post.counts?.reposts||0)+'</span></button>'+
-        '<button class="pulse-action '+(liked?'liked':'')+'" data-action="like" aria-label="Pulse" title="Pulse">'+icon('pi-pulse','pi-pulse')+'<span>'+Number(post.counts?.likes||0)+'</span></button>'+
+        '<button class="pulse-action" data-action="reply" aria-label="Répondre" title="Répondre">'+icon('pi-reply')+'<span class="pulse-action-name">Répondre</span><span class="pulse-action-count">'+Number(post.counts?.replies||0)+'</span></button>'+
+        '<button class="pulse-action '+(reposted?'active':'')+'" data-action="repost" aria-label="Relay" title="Relayer cette publication">'+icon('pi-relay')+'<span class="pulse-action-name">Relayer</span><span class="pulse-action-count">'+Number(post.counts?.reposts||0)+'</span></button>'+
+        '<button class="pulse-action '+(liked?'liked':'')+'" data-action="like" aria-label="Pulse" title="Envoyer un Pulse — montrer que cette publication vous plaît">'+icon('pi-pulse','pi-pulse')+'<span class="pulse-action-name">Pulse</span><span class="pulse-action-count">'+Number(post.counts?.likes||0)+'</span></button>'+
         '<button class="pulse-action '+(bookmarked?'active':'')+'" data-action="bookmark" aria-label="Enregistrer" title="Enregistrer">'+icon('pi-bookmark')+'</button>'+
         '<button class="pulse-action" data-action="share" aria-label="Partager" title="Partager">'+icon('pi-share')+'</button>'+
         '<button class="pulse-action danger" data-action="report" aria-label="Signaler" title="Signaler">'+icon('pi-report')+'</button>'+
@@ -71,7 +76,7 @@ function renderPost(post){
 }
 function renderPosts(posts,emptyText='Aucune publication pour le moment.'){if(!posts?.length){setStatus('Rien ici pour le moment',emptyText);return}feed.innerHTML=posts.map(renderPost).join('')}
 async function loadHome(){
-  setView('home','Pulse');setStatus('Chargement du fil','');
+  setView('home','Accueil');setStatus('Chargement du fil','');
   try{const d=await api('/api/pulse/feed?mode='+state.feed+'&limit=40');renderPosts(d.posts,state.user&&state.feed==='following'?'Suis des comptes ou publie le premier message de ton fil.':'Aucune publication publique.') }
   catch(e){setStatus('Pulse indisponible',errorText(e))}
 }
@@ -90,13 +95,13 @@ async function loadExplore(query=''){
   }catch(e){setStatus('Recherche impossible',errorText(e))}
 }
 async function loadCircles(){
-  setView('circles','Cercles');setStatus('Chargement des cercles','');
+  setView('circles','Communautés');setStatus('Chargement des communautés','');
   try{
     const d=await api('/api/pulse/circles');
-    let html='<section class="pulse-view"><div class="pulse-view-head"><h2>Cercles</h2><p>Des communautés publiques ou privées avec leurs propres conversations.</p></div>';
+    let html='<section class="pulse-view"><div class="pulse-view-head"><h2>Communautés</h2><p>Rejoignez des espaces autour d’un sujet, d’un projet ou d’un intérêt commun.</p></div>';
     if(state.user)html+='<form class="pulse-inline-form two" id="circle-create"><input name="name" minlength="3" maxlength="60" placeholder="Nom du cercle" required><input name="description" maxlength="240" placeholder="Description"><button class="pulse-mini-button primary">Créer</button></form>';
     html+='<div class="pulse-card-list">';
-    if(!d.circles.length)html+='<div class="pulse-card"><p>Aucun cercle public pour le moment.</p></div>';
+    if(!d.circles.length)html+='<div class="pulse-card"><p>Aucune communauté publique pour le moment.</p></div>';
     d.circles.forEach(function(c){html+='<div class="pulse-card"><div class="pulse-card-row"><div><h3>'+esc(c.name)+'</h3><div class="pulse-card-meta">'+c.memberCount+' membres · '+esc(c.visibility)+'</div></div><button class="pulse-mini-button '+(c.joined?'':'primary')+'" data-circle-join="'+esc(c.id)+'">'+(c.joined?'Quitter':'Rejoindre')+'</button></div><p>'+esc(c.description||'')+'</p></div>'});
     feed.innerHTML=html+'</div></section>';
   }catch(e){setStatus('Cercles indisponibles',errorText(e))}
@@ -112,7 +117,7 @@ async function loadNotifications(){
     feed.innerHTML=html+'</div></section>';await api('/api/pulse/notifications/read',{method:'POST',body:'{}'});
   }catch(e){setStatus('Notifications indisponibles',errorText(e))}
 }
-function notificationLabel(type){return{like:'a aimé ta publication.',repost:'a repartagé ta publication.',reply:'a répondu à ta publication.',quote:'a cité ta publication.',follow:'s’est abonné à ton profil.',message:'t’a envoyé un message.'}[type]||'a interagi avec toi.'}
+function notificationLabel(type){return{like:'a envoyé un Pulse à ta publication.',repost:'a relayé ta publication.',reply:'a répondu à ta publication.',quote:'a cité ta publication.',follow:'s’est abonné à ton profil.',message:'t’a envoyé un message.'}[type]||'a interagi avec toi.'}
 async function loadSaved(){
   if(!requireAuth())return;
   setView('saved','Enregistrés');setStatus('Chargement','');
@@ -184,7 +189,7 @@ async function restoreSession(){
   try{const d=await api('/api/pulse/me');state.user=d.user}catch{state.token='';localStorage.removeItem(TOKEN_KEY)}updateAccount()
 }
 async function health(){
-  try{const d=await api('/api/pulse/health');document.getElementById('api-state').textContent=d.storage==='mysql'?'MySQL connecté':'Serveur connecté';document.getElementById('api-state').title='Stockage : '+d.storage}
+  try{await api('/api/pulse/health');document.getElementById('api-state').textContent='En ligne';document.getElementById('api-state').title='Service Pulse disponible'}
   catch{document.getElementById('api-state').textContent='Hors ligne'}
 }
 
@@ -194,6 +199,8 @@ document.getElementById('cancel-context').addEventListener('click',clearReply);
 document.getElementById('compose-focus').addEventListener('click',function(){if(requireAuth()){setView('home','Pulse');textarea.focus();window.scrollTo({top:0,behavior:'smooth'})}});
 document.getElementById('mobile-compose').addEventListener('click',function(){if(requireAuth()){setView('home','Pulse');textarea.focus();window.scrollTo({top:0,behavior:'smooth'})}});
 document.getElementById('auth-button').addEventListener('click',function(){state.user?loadProfile(state.user.handle):openAuth('login')});
+document.getElementById('welcome-register').addEventListener('click',function(){openAuth('register')});
+document.getElementById('welcome-login').addEventListener('click',function(){openAuth('login')});
 document.getElementById('account-button').addEventListener('click',function(){state.user?loadProfile(state.user.handle):openAuth('register')});
 document.getElementById('auth-close').addEventListener('click',closeAuth);
 document.getElementById('auth-switch').addEventListener('click',function(){state.authMode=state.authMode==='login'?'register':'login';updateAuthModal()});
