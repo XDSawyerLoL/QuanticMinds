@@ -7,7 +7,7 @@
   <title>Quantic Pulse — Quantic Sillage</title>
   <meta name="description" content="Quantic Pulse : réseau social public et communautaire de l'écosystème Quantic Sillage.">
   <link rel="stylesheet" href="./site.css?v=20260918-1">
-  <link rel="stylesheet" href="./pulse.css?v=1">
+  <link rel="stylesheet" href="./pulse.css?v=2">
   <link rel="icon" type="image/svg+xml" href="./assets/quantic-sillage-mark.svg">
 </head>
 <body class="pulse-body">
@@ -19,37 +19,43 @@
       </a>
       <nav class="pulse-nav" aria-label="Navigation Pulse">
         <button class="pulse-nav-item active" data-view="home"><span>⌂</span>Accueil</button>
-        <button class="pulse-nav-item" data-view="explore"><span>⌘</span>Explorer</button>
+        <button class="pulse-nav-item" data-view="explore"><span>⌕</span>Explorer</button>
         <button class="pulse-nav-item" data-view="circles"><span>◉</span>Cercles</button>
+        <button class="pulse-nav-item" data-view="notifications"><span>◇</span>Notifications</button>
         <button class="pulse-nav-item" data-view="messages"><span>✉</span>Messages</button>
-        <button class="pulse-nav-item" data-view="saved"><span>◇</span>Enregistrés</button>
+        <button class="pulse-nav-item" data-view="saved"><span>▱</span>Enregistrés</button>
         <button class="pulse-nav-item" data-view="profile"><span>◎</span>Profil</button>
       </nav>
       <button class="pulse-primary" id="compose-focus">Publier</button>
-      <div class="pulse-account">
-        <div class="pulse-avatar">QS</div>
-        <div><strong>Quantic Sillage</strong><span>@quantic</span></div>
-      </div>
+      <button class="pulse-account" id="account-button">
+        <div class="pulse-avatar" id="account-avatar">?</div>
+        <div><strong id="account-name">Connexion</strong><span id="account-handle">Créer un compte</span></div>
+      </button>
     </aside>
 
     <main class="pulse-main">
       <header class="pulse-topbar">
-        <div><span class="pulse-kicker">Quantic Sillage</span><h1>Pulse</h1></div>
-        <a href="index.html" class="pulse-back">Écosystème ↗</a>
+        <div><span class="pulse-kicker">Quantic Sillage</span><h1 id="view-title">Pulse</h1></div>
+        <div class="pulse-top-actions">
+          <button class="pulse-top-button" id="auth-button">Se connecter</button>
+          <a href="index.html" class="pulse-back">Écosystème ↗</a>
+        </div>
       </header>
 
-      <section class="pulse-tabs" aria-label="Sélection du fil">
+      <section class="pulse-tabs" id="feed-tabs" aria-label="Sélection du fil">
         <button class="pulse-tab active" data-feed="following">Chronologique</button>
         <button class="pulse-tab" data-feed="discover">Découverte</button>
       </section>
 
       <section class="pulse-composer" id="composer">
-        <div class="pulse-avatar">QS</div>
+        <div class="pulse-avatar" id="composer-avatar">?</div>
         <div class="pulse-compose-main">
+          <div class="pulse-context" id="pulse-context" hidden></div>
           <textarea id="pulse-text" maxlength="420" placeholder="Qu'est-ce qui mérite de circuler ?"></textarea>
           <div class="pulse-compose-tools">
             <div class="pulse-toolset">
-              <button title="Image">▧</button><button title="Lien">↗</button><button title="Sondage">≋</button><button title="Source Quantic News">N</button>
+              <button title="Partager Quantic News" data-tool="news">N</button>
+              <button title="Annuler la réponse" id="cancel-context" hidden>×</button>
             </div>
             <div class="pulse-compose-right"><span id="pulse-count">0 / 420</span><button class="pulse-publish" id="pulse-publish" disabled>Publier</button></div>
           </div>
@@ -62,24 +68,41 @@
     <aside class="pulse-right">
       <div class="pulse-search"><span>⌕</span><input id="pulse-search" type="search" placeholder="Rechercher sur Pulse"></div>
       <section class="pulse-panel">
-        <div class="pulse-panel-head"><h2>En ce moment</h2><span>Direct</span></div>
-        <button class="trend"><small>Technologie · maintenant</small><strong>IA locale et privée</strong><span>1 284 publications</span></button>
-        <button class="trend"><small>Quantic News</small><strong>Interfaces post-app</strong><span>642 publications</span></button>
-        <button class="trend"><small>Communautés</small><strong>#BuildInPublic</strong><span>389 publications</span></button>
+        <div class="pulse-panel-head"><h2>Pulse V1</h2><span id="api-state">Connexion…</span></div>
+        <div class="pulse-info-row"><strong>Fil</strong><span>Chronologique disponible en permanence</span></div>
+        <div class="pulse-info-row"><strong>Données</strong><span>Export intégral depuis le profil</span></div>
+        <div class="pulse-info-row"><strong>Modération</strong><span>Blocage et signalement intégrés</span></div>
       </section>
       <section class="pulse-panel">
-        <div class="pulse-panel-head"><h2>Cercles à découvrir</h2><a href="#">Voir tout</a></div>
-        <button class="circle"><span class="circle-mark">Q</span><span><strong>Quantic Lab</strong><small>1,8 k membres</small></span><b>+</b></button>
-        <button class="circle"><span class="circle-mark">AI</span><span><strong>IA & Agents</strong><small>4,2 k membres</small></span><b>+</b></button>
-        <button class="circle"><span class="circle-mark">DEV</span><span><strong>Builders FR</strong><small>2,1 k membres</small></span><b>+</b></button>
+        <div class="pulse-panel-head"><h2>Cercles à découvrir</h2><button class="pulse-link-button" data-view="circles">Voir tout</button></div>
+        <div id="circle-preview"><div class="pulse-panel-loading">Chargement…</div></div>
       </section>
-      <p class="pulse-privacy">Fil chronologique disponible en permanence · personnalisation désactivable · export des données prévu dans la V1 publique.</p>
+      <p class="pulse-privacy">Pas de publicité comportementale · pseudonymat autorisé · personnalisation désactivable.</p>
     </aside>
   </div>
 
   <nav class="pulse-mobile-nav" aria-label="Navigation mobile">
     <button class="active" data-view="home">⌂</button><button data-view="explore">⌕</button><button id="mobile-compose">＋</button><button data-view="messages">✉</button><button data-view="profile">◎</button>
   </nav>
-  <script src="./pulse.js?v=1"></script>
+
+  <div class="pulse-modal" id="auth-modal" hidden>
+    <div class="pulse-modal-card" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+      <button class="pulse-modal-close" id="auth-close" aria-label="Fermer">×</button>
+      <span class="pulse-kicker">Quantic Pulse</span>
+      <h2 id="auth-title">Se connecter</h2>
+      <p id="auth-copy">Retrouve ton fil, tes abonnements, tes messages et tes cercles.</p>
+      <form id="auth-form">
+        <label id="display-name-field" hidden>Nom affiché<input id="auth-display-name" maxlength="50" autocomplete="name"></label>
+        <label>Identifiant<input id="auth-handle" maxlength="24" autocomplete="username" placeholder="@identifiant" required></label>
+        <label>Mot de passe<input id="auth-password" type="password" minlength="10" maxlength="128" autocomplete="current-password" required></label>
+        <div class="pulse-auth-error" id="auth-error"></div>
+        <button class="pulse-publish pulse-auth-submit" type="submit">Continuer</button>
+      </form>
+      <button class="pulse-auth-switch" id="auth-switch">Créer un compte</button>
+    </div>
+  </div>
+
+  <script src="./pulse-config.js?v=1"></script>
+  <script src="./pulse.js?v=2"></script>
 </body>
 </html>
