@@ -13,3 +13,17 @@
 @media(max-width:1050px){.qs-header-inner>.qs-global-enter{margin-left:auto}.qs-header-inner>.qs-global-enter+.qs-contact{display:none}}
 @media(max-width:700px){.qs-id-card{padding:30px 22px;border-radius:22px}.qs-id-actions{flex-direction:column}.qs-id-action{width:100%}.qs-app-switcher{right:14px;bottom:14px}.pulse-body .qs-app-switcher{bottom:76px}.qs-global-enter{min-height:36px;padding:0 13px}}
 @media(prefers-reduced-motion:reduce){.qs-global-enter,.qs-app-switcher>button{transition:none!important}}
+
+/* Premium page overrides */
+/* Quantic Sillage unified premium layer — Apple calm × Microsoft structure */
+:root{--q-premium-canvas:#f5f7f9;--q-premium-surface:#fff;--q-premium-ink:#10202c;--q-premium-muted:#687681;--q-premium-line:rgba(14,39,54,.11);--q-premium-radius:22px;--q-premium-shadow:0 1px 2px rgba(5,22,34,.04),0 14px 40px rgba(5,22,34,.07)}
+body:not(.home-v2):not(.pulse-body){background:var(--q-premium-canvas);color:var(--q-premium-ink);-webkit-font-smoothing:antialiased}
+.site-header{height:66px;background:rgba(248,250,251,.80);backdrop-filter:blur(26px) saturate(150%);border-bottom:1px solid rgba(17,42,57,.08)}
+.header-inner{height:66px;width:min(1410px,calc(100% - 42px));gap:24px}.site-brand img{width:208px;height:42px;filter:none}.site-nav{gap:4px}.site-nav a{min-height:38px;padding:0 14px;border:0;border-radius:999px;color:#52626d;font-size:.82rem}.site-nav a:hover{color:#102631;background:rgba(7,25,39,.04)}.site-nav a.active{color:#0b2634;background:#fff;box-shadow:0 1px 2px rgba(6,24,39,.06),0 4px 16px rgba(6,24,39,.05)}.header-contact{color:#445965;border:0;padding:10px 13px;font-size:.8rem;font-weight:600}.header-contact:hover{background:rgba(7,25,39,.04)}.menu-toggle{color:#102631}.mobile-nav{top:66px;left:12px;right:12px;border:1px solid var(--q-premium-line);border-radius:18px;background:rgba(255,255,255,.96);box-shadow:0 30px 70px rgba(5,22,34,.16)}
+.page-hero{background:linear-gradient(180deg,#fbfcfd,#eef3f6);color:#10202c;padding:112px 0 92px}.page-hero:after{border-color:rgba(0,201,238,.12);box-shadow:0 0 100px rgba(0,201,238,.05)}.page-hero h1{letter-spacing:-.055em}.page-hero p{color:#687681}.page-hero .btn:not(.primary){background:#fff;color:#17313f;border-color:rgba(14,39,54,.13)}
+.section{padding:100px 0}.section.soft{background:linear-gradient(180deg,#f8fafb,#eef3f5)}.section.dark{background:linear-gradient(140deg,#071927,#0b3041)}.section-head{gap:80px}.section-head h2{letter-spacing:-.045em}.section-head p{color:#687681}
+.btn{min-height:46px;border:1px solid rgba(14,39,54,.13);background:#fff;color:#172b36;box-shadow:none}.btn:hover{border-color:rgba(0,201,238,.45);box-shadow:var(--q-premium-shadow)}.btn.primary{background:#111d25;border-color:#111d25;box-shadow:0 8px 24px rgba(7,25,39,.13)}.btn.primary:hover{background:#173746}
+.value-card,.stat,.feature-list div,.news-card,.about-panel:not(.dark){border-color:var(--q-premium-line);border-radius:18px;box-shadow:var(--q-premium-shadow)}
+.product-detail{gap:64px}.product-visual{border-radius:24px;box-shadow:0 28px 70px rgba(7,31,45,.13)}.product-copy h2{letter-spacing:-.045em}.architecture{border-color:var(--q-premium-line);border-radius:22px}.architecture div{border-color:var(--q-premium-line)}
+.news-toolbar{top:66px}.news-card{overflow:hidden}
+@media(max-width:900px){.site-nav,.header-contact{display:none}.site-header,.header-inner{height:60px}.site-brand img{width:170px;height:38px}.mobile-nav{top:67px}.page-hero{padding:88px 0 72px}.section{padding:72px 0}.section-head{gap:22px}}
