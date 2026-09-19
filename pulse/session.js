@@ -39,11 +39,11 @@ export function updateAccount(){
     dom.followingLabel.textContent='Abonnements';
     dom.followingHelp.textContent='Les comptes que vous suivez';
   }else{
-    name.textContent='Connexion';
-    handle.textContent='Créer un compte';
+    name.textContent='Compte Pulse';
+    handle.textContent='Identité locale Pulse';
     avatar.textContent='?';
     composerAvatar.textContent='?';
-    button.textContent='Se connecter';
+    button.textContent='Compte Pulse';
     dom.textarea.placeholder='Écrivez une publication…';
     dom.followingLabel.textContent='Récent';
     dom.followingHelp.textContent='Les publications les plus récentes';
