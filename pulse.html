@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="./site.css?v=20260918-1">
   <link rel="stylesheet" href="./pulse.css?v=5">
   <link rel="icon" type="image/svg+xml" href="./assets/quantic-sillage-mark.svg">
+  <link rel="stylesheet" href="./quantic-shell.css?v=20260919-1">
 </head>
 <body class="pulse-body">
   <svg class="pulse-icon-sprite" aria-hidden="true">
@@ -52,7 +53,7 @@
       <button class="pulse-primary" id="compose-focus"><svg class="pi " aria-hidden="true"><use href="#pi-plus"></use></svg><span class="pulse-primary-label">Publier</span></button>
       <button class="pulse-account" id="account-button">
         <div class="pulse-avatar" id="account-avatar">?</div>
-        <div><strong id="account-name">Connexion</strong><span id="account-handle">Créer un compte</span></div>
+        <div><strong id="account-name">Compte Pulse</strong><span id="account-handle">Identité locale Pulse</span></div>
       </button>
     </aside>
 
@@ -61,7 +62,7 @@
         <div><span class="pulse-kicker">Quantic Pulse</span><h1 id="view-title">Accueil</h1></div>
         <div class="pulse-top-actions">
           <a class="pulse-top-button pulse-mail-access" href="https://quanticmail.onrender.com"><svg class="pi" aria-hidden="true"><use href="#pi-mail"></use></svg><span>QuanticMail</span></a>
-          <button class="pulse-top-button" id="auth-button">Se connecter</button>
+          <button class="pulse-top-button" id="auth-button">Compte Pulse</button>
           <a href="index.html" class="pulse-back">Écosystème <svg class="pi " aria-hidden="true"><use href="#pi-external"></use></svg></a>
         </div>
       </header>
@@ -74,7 +75,7 @@
           <p>Vous pouvez lire Pulse sans compte. Créez-en un pour publier, suivre des personnes, rejoindre des communautés et envoyer des messages.</p>
           <div class="pulse-welcome-actions">
             <button class="pulse-welcome-primary" id="welcome-register">Créer mon compte</button>
-            <button class="pulse-welcome-secondary" id="welcome-login">J’ai déjà un compte</button>
+            <button class="pulse-welcome-secondary" id="welcome-login">J’ai déjà un compte Pulse</button>
           </div>
         </div>
       </section>
@@ -142,5 +143,6 @@
 
   <script src="./pulse-config.js?v=1"></script>
   <script type="module" src="./pulse/app.js?v=1"></script>
+  <script src="./quantic-shell.js?v=20260919-1"></script>
 </body>
 </html>
